@@ -64,18 +64,22 @@ const InstanceSummary: NextPage<InstanceSummaryProps> = ({ registration }) => {
                 </Link>
 
                 <h3>Peserta</h3>
-                <div className="d-flex flex-row gap-5">
-                    <div className="d-flex flex-column">
-                        <h5>Peserta I</h5>
-                        <Link className="btn btn-primary" href="/participant_registration/1">
-                            Tambah
-                        </Link>
+                <div className="row">
+                    <div className="col">
+                        <div className="d-flex flex-column">
+                            <h5>Peserta I</h5>
+                            <Link className="btn btn-primary" href="/participant_registration/1">
+                                Tambah
+                            </Link>
+                        </div>
                     </div>
-                    <div className="d-flex flex-column">
-                        <h5>Peserta II</h5>
-                        <Link className="btn btn-primary" href="/participant_registration/2">
-                            Tambah
-                        </Link>
+                    <div className="col">
+                        <div className="d-flex flex-column">
+                            <h5>Peserta II</h5>
+                            <Link className="btn btn-primary" href="/participant_registration/2">
+                                Tambah
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
