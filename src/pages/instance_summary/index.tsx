@@ -42,7 +42,7 @@ const InstanceSummary: NextPage<InstanceSummaryProps> = ({ registration }) => {
     return (
         <>
             <Head>
-                <title>LEAD Indonesia</title>
+                <title>Ringkasan Instansi</title>
             </Head>
             <div className="container d-flex flex-column gap-2 align-items-left justify-content-left vh-90">
                 <h2>Ringkasan</h2>
@@ -68,7 +68,7 @@ const InstanceSummary: NextPage<InstanceSummaryProps> = ({ registration }) => {
                     <div className="col">
                         <div className="d-flex flex-column">
                             <h5>Peserta I</h5>
-                            <Link className="btn btn-primary" href="/participant_registration/1">
+                            <Link className="btn btn-primary" href="/participant_registration/participant1">
                                 Tambah
                             </Link>
                         </div>
@@ -76,7 +76,7 @@ const InstanceSummary: NextPage<InstanceSummaryProps> = ({ registration }) => {
                     <div className="col">
                         <div className="d-flex flex-column">
                             <h5>Peserta II</h5>
-                            <Link className="btn btn-primary" href="/participant_registration/2">
+                            <Link className="btn btn-primary" href="/participant_registration/participant2">
                                 Tambah
                             </Link>
                         </div>

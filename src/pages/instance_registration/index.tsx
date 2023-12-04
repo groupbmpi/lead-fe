@@ -24,7 +24,7 @@ export default function Home() {
       <>
         <form onSubmit={handleSubmit}>
             <Head>
-            <title>LEAD Indonesia</title>
+            <title>Pendaftaran Instansi</title>
             </Head>
             <div className="container d-flex flex-column gap-2 align-items-left justify-content-left vh-90">
                 <h1>Daftar</h1>
