@@ -1,0 +1,38 @@
+import Image from "next/image";
+import Link from "next/link";
+
+const NavbarGuest = () => {
+  return (
+    <nav className="navbar bg-light navbar-expand-lg p-2">
+      <div className="container-fluid">
+        <span className="navbar-brand">
+          <Image src="/logo/lead-logo-cropped.png" alt="LEAD Logo" width={369 * 0.25} height={229 * 0.25} className="d-inline-block align-text-center" />
+        </span>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" href="/instance_registration">Registrasi Peserta</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" href="/check_registration_status">Cek Status Registrasi</Link>
+            </li>
+            <li className="nav-item dropdown">
+              <Link className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Login
+              </Link>
+              <ul className="dropdown-menu">
+                <li><Link className="dropdown-item" href="/participant_login">Peserta</Link></li>
+                <li><Link className="dropdown-item" href="/mentor_login">Mentor</Link></li>
+                <li><Link className="dropdown-item" href="/admin_login">Admin</Link></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  )
+}
+export default NavbarGuest;
