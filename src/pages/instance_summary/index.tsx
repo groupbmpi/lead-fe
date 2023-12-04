@@ -1,5 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head'
+import Link from 'next/link'
 import { useState } from 'react';
 
 interface InstanceSummaryProps {
@@ -58,17 +59,23 @@ const InstanceSummary: NextPage<InstanceSummaryProps> = ({ registration }) => {
                 <p>Target Penerima Manfaat : {registration.targetPenerimaManfaat}</p>
                 <p>Kabupaten/Kota Tercakup : {registration.kotaTercakup}</p>
                 <p>Provinsi Tercakup       : {registration.provinsiTercakup}</p>
-                <a className="btn btn-primary" href="/instance_registration">Ubah</a>
+                <Link className="btn btn-primary" href="/instance_registration">
+                    Ubah
+                </Link>
 
                 <h3>Peserta</h3>
                 <div className="d-flex flex-row gap-5">
                     <div className="d-flex flex-column">
                         <h5>Peserta I</h5>
-                        <a className="btn btn-primary" href="/participant_registration/1">Tambah</a>
+                        <Link className="btn btn-primary" href="/participant_registration/1">
+                            Tambah
+                        </Link>
                     </div>
                     <div className="d-flex flex-column">
                         <h5>Peserta II</h5>
-                        <a className="btn btn-primary" href="/participant_registration/2">Tambah</a>
+                        <Link className="btn btn-primary" href="/participant_registration/2">
+                            Tambah
+                        </Link>
                     </div>
                 </div>
 
@@ -90,10 +97,16 @@ const InstanceSummary: NextPage<InstanceSummaryProps> = ({ registration }) => {
                         checked={confirmedConcept}
                         onChange={handleConfirmationConceptChange}
                     />
-                    <label htmlFor="confirmConcept">Saya sudah membaca dan memahami <a href="https://bit.ly/LEADBCF-2023">Concept Note</a></label>
+                    <label htmlFor="confirmConcept">Saya sudah membaca dan memahami 
+                        <Link href="https://bit.ly/LEADBCF-2023">
+                            Concept Note
+                        </Link>
+                    </label>
                 </div>
 
-                <a className="btn btn-primary" href="/">Daftar</a>
+                <Link className="btn btn-primary" href="/">
+                    Daftar
+                </Link>
             </div>
         </>
     );

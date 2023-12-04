@@ -1,5 +1,6 @@
 import { Console } from 'console';
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
 
@@ -121,7 +122,11 @@ export default function Home() {
                 <h2>Berkas Instansi</h2>
                 <h5>Unggah Berkas Company Profile</h5>
                 <p>Pastikan tautan dapat diakses secara publik</p>
-                <p>Syarat dan ketentuan company profile tercantum <a href= "https://bit.ly/template-profil-lembaga-peserta-LEAD">disini</a></p>
+                <p>Syarat dan ketentuan company profile tercantum 
+                    <Link href= "https://bit.ly/template-profil-lembaga-peserta-LEAD">
+                        disini
+                    </Link>
+                </p>
                 <input type="url" name="companyProfile"/>
                 <h5>Unggah Berkas Proposal Program</h5>
                 <p>Pastikan tautan dapat diakses secara publik</p>
