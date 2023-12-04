@@ -1,3 +1,4 @@
+import { Console } from 'console';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
@@ -13,7 +14,6 @@ export default function Home() {
         registration.forEach((value, key) => {
             registrationObject[key] = value.toString();
         });
-
         router.push({
         pathname: '/instance_summary',
         query: registrationObject,
@@ -127,7 +127,7 @@ export default function Home() {
                 <p>Pastikan tautan dapat diakses secara publik</p>
                 <input type="url" name="proposalProgram"/>
 
-                <a className="btn btn-primary" href="/instance_summary">Berikutnya</a>
+                <button type="submit" className="btn btn-primary">Berikutnya</button>
             </div>
         </form>
       </>

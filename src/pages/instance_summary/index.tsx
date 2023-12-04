@@ -1,40 +1,41 @@
+import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head'
-import { useRouter } from 'next/router';
-import {useState } from 'react';
+import { useState } from 'react';
 
-export default function Home() {
-    const router = useRouter();
-    const registration = router.query
+interface InstanceSummaryProps {
+    registration: Record<string, string>;
+}
+
+const InstanceSummary: NextPage<InstanceSummaryProps> = ({ registration }) => {
     const [confirmedData, setConfirmedData] = useState(false);
     const [confirmedConcept, setConfirmedConcept] = useState(false);
-  
-  
-//   const [error, setError] = useState('')
 
-//   if (!confirmedData) {
-//     if(!error){
-//         setError('Pastikan data yang diisi sudah benar');
-//     }
-//     return;
-//   }
+    //   const [error, setError] = useState('')
 
-//   if (!confirmedConcept) {
-//     if(!error){
-//         setError('Pastikan anda sudah membaca dan memahami Concept Note');
-//     }
-//     return;
-//   }
+    //   if (!confirmedData) {
+    //     if(!error){
+    //         setError('Pastikan data yang diisi sudah benar');
+    //     }
+    //     return;
+    //   }
 
-//   setError('')
+    //   if (!confirmedConcept) {
+    //     if(!error){
+    //         setError('Pastikan anda sudah membaca dan memahami Concept Note');
+    //     }
+    //     return;
+    //   }
+
+    //   setError('')
 
     const handleConfirmationDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setConfirmedData(e.target.checked);
-//     setError('')
+        //     setError('')
     };
 
     const handleConfirmationConceptChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setConfirmedConcept(e.target.checked);
-//     setError('')
+        //     setError('')
     };
 
     return (
@@ -65,10 +66,10 @@ export default function Home() {
                         <h5>Peserta I</h5>
                         <a className="btn btn-primary" href="/participant_registration/1">Tambah</a>
                     </div>
-                    <div className="d-flex flex-column">                        
+                    <div className="d-flex flex-column">
                         <h5>Peserta II</h5>
                         <a className="btn btn-primary" href="/participant_registration/2">Tambah</a>
-                    </div>                
+                    </div>
                 </div>
 
                 <div>
@@ -97,3 +98,13 @@ export default function Home() {
         </>
     );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+    return {
+        props: {
+            registration: query,
+        },
+    };
+};
+
+export default InstanceSummary;
