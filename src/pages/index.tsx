@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -30,16 +31,16 @@ export default function Home() {
           />
         </div>
         <div>
-          <a className="btn btn-primary" href="/instance_registration">Registrasi Peserta</a>
-          <a className="btn btn-primary mx-3" href="/check_registration_status">Cek Status Registrasi</a>
+          <Link className="btn btn-primary" href="/instance_registration">Registrasi Peserta</Link>
+          <Link className="btn btn-primary mx-3" href="/check_registration_status">Cek Status Registrasi</Link>
           <div className="dropdown d-inline">
             <a className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               Login
             </a>
             <ul className="dropdown-menu">
-              <li><a className="dropdown-item" href="participant_login">Peserta</a></li>
-              <li><a className="dropdown-item" href="mentor_login">Mentor</a></li>
-              <li><a className="dropdown-item" href="admin_login">Admin</a></li>
+              <li><Link className="dropdown-item" href="participant_login">Peserta</Link></li>
+              <li><Link className="dropdown-item" href="mentor_login">Mentor</Link></li>
+              <li><Link className="dropdown-item" href="admin_login">Admin</Link></li>
             </ul>
           </div>
         </div>
