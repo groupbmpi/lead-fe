@@ -18,19 +18,21 @@ const NavbarGuest = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
+          <ul className="navbar-nav me-auto">
             <li className="nav-item">
               <Link className={`nav-link ${isLinkActive('/instance-registration') ? 'active' : ''}`} href="/instance-registration">Registrasi Peserta</Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link ${isLinkActive('/check-registration-status') ? 'active' : ''}`} href="/check-registration-status">Cek Status Registrasi</Link>
             </li>
+          </ul>
+          <ul className="navbar-nav">
             <li className="nav-item dropdown">
               <Link className={`nav-link dropdown-toggle ${isLinkActive('/participant-login') ||
-                  isLinkActive('/mentor-login') ||
-                  isLinkActive('/admin-login')
-                  ? 'active'
-                  : ''
+                isLinkActive('/mentor-login') ||
+                isLinkActive('/admin-login')
+                ? 'active'
+                : ''
                 }`} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Login
               </Link>
