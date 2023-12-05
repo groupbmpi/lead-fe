@@ -40,7 +40,6 @@ export default function Home() {
             <ul className="dropdown-menu">
               <li><Link className="dropdown-item" href="participant_login">Peserta</Link></li>
               <li><Link className="dropdown-item" href="mentor_login">Mentor</Link></li>
-              <li><Link className="dropdown-item" href="admin_login">Admin</Link></li>
             </ul>
           </div>
         </div>

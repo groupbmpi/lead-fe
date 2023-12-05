@@ -27,7 +27,7 @@ const NavbarGuest = () => {
             </li>
           </ul>
           <ul className="navbar-nav">
-            <li className="nav-item dropdown">
+            <li className="nav-item dropstart">
               <Link className={`nav-link dropdown-toggle ${isLinkActive('/participant-login') ||
                 isLinkActive('/mentor-login') ||
                 isLinkActive('/admin-login')
@@ -39,7 +39,6 @@ const NavbarGuest = () => {
               <ul className="dropdown-menu">
                 <li><Link className="dropdown-item" href="/participant-login">Peserta</Link></li>
                 <li><Link className="dropdown-item" href="/mentor-login">Mentor</Link></li>
-                <li><Link className="dropdown-item" href="/admin-login">Admin</Link></li>
               </ul>
             </li>
           </ul>
