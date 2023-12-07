@@ -53,7 +53,7 @@ const SummaryRegistration = () => {
                         <p>Email Peserta              : {userData.emailPeserta1}</p>
                         <p>Pendidikan Terakhir Peserta: {userData.pendidikanPeserta1}</p>
                         <p>No Whatsapp Peserta        : {userData.pendidikanPeserta1}</p>
-                        <Link className="btn btn-primary" href="/participant-registration/participant1">Ubah</Link>
+                        <Link className="btn btn-primary" href="/registration/participant1">Ubah</Link>
                     </div>
                 )}
             </div>
@@ -88,7 +88,7 @@ const SummaryRegistration = () => {
                         <div className="col">
                             <div className="d-flex flex-column">
                                 <h5>Peserta I</h5>
-                                <Link className="btn btn-primary" href="/participant-registration/participant1">Tambah</Link>
+                                <Link className="btn btn-primary" href="/registration/participant1">Tambah</Link>
                             </div>
                         </div>
                     )}
@@ -96,7 +96,7 @@ const SummaryRegistration = () => {
                     <div className="col">
                         <div className="d-flex flex-column">
                             <h5>Peserta II</h5>
-                            <Link className="btn btn-primary" href="/participant-registration/participant2">Tambah</Link>
+                            <Link className="btn btn-primary" href="/registration/participant2">Tambah</Link>
                         </div>
                     </div>
                 </div>

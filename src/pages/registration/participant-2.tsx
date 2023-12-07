@@ -16,7 +16,7 @@ export default function Home() {
             p2_registrationObject[key] = value.toString();
         });
         router.push({
-        pathname: '/summary-registration',
+        pathname: '/registration/summary',
         query: p2_registrationObject,
         });
     };

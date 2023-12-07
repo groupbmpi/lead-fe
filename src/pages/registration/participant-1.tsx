@@ -24,7 +24,7 @@ export default function Home() {
         setIsFormFilled1(true);
 
         router.push({
-        pathname: '/summary-registration',
+        pathname: '/registration/summary',
         query: p1_registrationObject,
         });
     };
