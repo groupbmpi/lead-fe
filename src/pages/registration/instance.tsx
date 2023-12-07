@@ -1,9 +1,8 @@
-import { useRegistration } from '@/contexts/RegistrationContext';
-import withRegistrationProvider from '@/contexts/withRegistrationProvider';
+import { useRegistration } from '@/contexts/RegistrationContext'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 
 const Home = () => {
 
@@ -22,14 +21,8 @@ const Home = () => {
             ...prevUserData,
             ...instanceRegistrationData,
         }));
+        router.push('/registration/summary');
     };
-
-    useEffect(() => {
-        console.log(userData);
-        if (Object.keys(userData).length > 0) {
-            router.push('/registration/summary');
-        }
-    }, [userData, router]);
 
     return (
         <>
@@ -175,4 +168,4 @@ const Home = () => {
     )
 }
 
-export default withRegistrationProvider(Home);
+export default Home;
