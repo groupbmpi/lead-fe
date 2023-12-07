@@ -10,6 +10,12 @@ const SummaryRegistration = () => {
   const router = useRouter();
   const [confirmedData, setConfirmedData] = useState(false);
   const [confirmedConcept, setConfirmedConcept] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  type LabelValuePairProps = {
+    label: string;
+    value: string;
+  };
 
   useEffect(() => {
     if (!userData || Object.keys(userData).length === 0) {
@@ -17,23 +23,45 @@ const SummaryRegistration = () => {
     }
   }, [userData, router]);
 
+  useEffect(() => {
+    setButtonDisabled(!(confirmedData && confirmedConcept));
+  }, [confirmedData, confirmedConcept]);
+
   const handleConfirmationDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmedData(e.target.checked);
-    //     setError('')
   };
 
   const handleConfirmationConceptChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmedConcept(e.target.checked);
-    //     setError('')
   };
+
+  const handleButtonClick = () => {
+    if (confirmedData && confirmedConcept) {
+      window.location.href = '/'; 
+    }
+  };
+
+  const LabelValuePairInstance = ({ label, value }: LabelValuePairProps) => (
+    <p style={{ display: 'flex', alignItems: 'center' }}>
+      <span style={{ flex: '0 0 24.5%' }}>{label}</span>
+      <span style={{ flex: '0 0 24.5%' }}>: {value}</span>
+    </p>
+  ); 
+
+  const LabelValuePair = ({ label, value }: LabelValuePairProps) => (
+    <p style={{ display: 'flex', alignItems: 'center' }}>
+      <span style={{ flex: '0 0 50%' }}>{label}</span>
+      <span style={{ flex: '0 0 50%' }}>: {value}</span>
+    </p>
+  );
 
   const renderParticipant1Data = () => {
     return (
-      <div>
-        <p>Nama Peserta               : {userData.namaPeserta1}</p>
-        <p>Email Peserta              : {userData.emailPeserta1}</p>
-        <p>Pendidikan Terakhir Peserta: {userData.pendidikanPeserta1}</p>
-        <p>No Whatsapp Peserta        : {userData.whatsappPeserta2}</p>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <LabelValuePair label="Nama Peserta" value={userData.namaPeserta1} />
+        <LabelValuePair label="Email Peserta" value={userData.emailPeserta1} />
+        <LabelValuePair label="Pendidikan Terakhir Peserta" value={userData.pendidikanPeserta1} />
+        <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta1} />
         <Link className="btn btn-primary" href="/registration/participant-1">Ubah</Link>
       </div>
     );
@@ -41,15 +69,17 @@ const SummaryRegistration = () => {
 
   const renderParticipant2Data = () => {
     return (
-      <div>
-        <p>Nama Peserta               : {userData.namaPeserta2}</p>
-        <p>Email Peserta              : {userData.emailPeserta2}</p>
-        <p>Pendidikan Terakhir Peserta: {userData.pendidikanPeserta2}</p>
-        <p>No Whatsapp Peserta        : {userData.whatsappPeserta2}</p>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <LabelValuePair label="Nama Peserta" value={userData.namaPeserta2} />
+        <LabelValuePair label="Email Peserta" value={userData.emailPeserta2} />
+        <LabelValuePair label="Pendidikan Terakhir Peserta" value={userData.pendidikanPeserta2} />
+        <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta2} />
         <Link className="btn btn-primary" href="/registration/participant-2">Ubah</Link>
       </div>
     );
   };
+
+  const fullAddress = `${userData.alamatKantor}, ${userData.kotaKantor}, ${userData.provinsiKantor}`;
 
   return (
     <>
@@ -60,14 +90,16 @@ const SummaryRegistration = () => {
         <h2>Ringkasan</h2>
         <h3>Instansi</h3>
         <h5>Profil</h5>
-        <p>Nama Instansi            : {userData.namaInstansi}</p>
-        <p>Email Instansi           : {userData.emailInstansi}</p>
-        <p>Tanggal Berdiri Instansi : {userData.tanggalBerdiri}</p>
-        <p>Jenis Instansi           : {userData.jenisInstansi}</p>
-        <p>Jenis Cluster            : {userData.jenisCluster}</p>
-        <p>Alamat Lengkap           : {userData.alamatKantor}, {userData.kotaKantor}, {userData.provinsiKantor}</p>
-        <p>Jumlah Penerima Manfaat  : {userData.penerimaManfaat}</p>
-        <Link className="btn btn-primary" href="/registration/instance">Ubah</Link>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <LabelValuePairInstance label="Nama Instansi" value={userData.namaInstansi} />
+          <LabelValuePairInstance label="Email Instansi" value={userData.emailInstansi} />
+          <LabelValuePairInstance label="Tahun/Bulan Berdiri Instansi" value={userData.tanggalBerdiri} />
+          <LabelValuePairInstance label="Jenis Instansi" value={userData.jenisInstansi} />
+          <LabelValuePairInstance label="Jenis Cluster" value={userData.jenisCluster} />
+          <LabelValuePairInstance label="Alamat Lengkap" value={fullAddress} />
+          <LabelValuePairInstance label="Jumlah Penerima Manfaat" value={userData.jumlahPenerimaManfaat} />
+          <Link className="btn btn-primary" href="/registration/instance">Ubah</Link>
+        </div>
         <h3>Peserta</h3>
         <div className="row">
           <div className="col">
@@ -109,7 +141,9 @@ const SummaryRegistration = () => {
             <Link href="https://bit.ly/LEADBCF-2023">Concept Note</Link>
           </label>
         </div>
-        <Link className="btn btn-primary" href="/">Daftar</Link>
+        <button className="btn btn-primary" onClick={handleButtonClick} disabled={buttonDisabled}>
+          Daftar
+        </button>
       </div>
     </>
   );

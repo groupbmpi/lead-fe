@@ -32,32 +32,25 @@ const Home = () => {
                 </Head>
                 <div className="container d-flex flex-column gap-2 align-items-left justify-content-left vh-90">
                     <h1>Daftar</h1>
-                    <h2>Email Pendaftar</h2>
-                    <div className="mb-3">
-                        <label htmlFor="emailPendaftar" className="form-label"><h5>Email pendaftar</h5></label>
-                        <p>Hasil copy dari pendaftaran akan dikirimkan ke email pendaftar</p>
-                        <input value={userData.emailPendaftar} onChange={(e) => setUserData({ ...userData, emailPendaftar: e.target.value })} type="text" className="form-control" name="emailPendaftar" placeholder="Email Pendaftar" />
-                    </div>
-
                     <h2>Profile Instansi</h2>
                     <div className="mb-3">
                         <label htmlFor="namaInstansi" className="form-label"><h5>Nama Instansi</h5></label>
-                        <input value={userData.namaInstansi} onChange={(e) => setUserData({ ...userData, namaInstansi: e.target.value })} type="text" className="form-control" name="namaInstansi" placeholder="Nama Instansi" />
+                        <input value={userData.namaInstansi} onChange={(e) => setUserData({ ...userData, namaInstansi: e.target.value })} type="text" className="form-control" name="namaInstansi" placeholder="Nama Instansi" required />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="emailInstansi" className="form-label"><h5>Email Instansi</h5></label>
-                        <input value={userData.emailInstansi} onChange={(e) => setUserData({ ...userData, emailInstansi: e.target.value })} type="text" className="form-control" name="emailInstansi" placeholder="Email Instansi" />
+                        <input value={userData.emailInstansi} onChange={(e) => setUserData({ ...userData, emailInstansi: e.target.value })} type="text" className="form-control" name="emailInstansi" placeholder="Email Instansi" required />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="tanggalBerdiri" className="form-label"><h5>Bulan/Tahun Instansi</h5></label>
-                        <input value={userData.tanggalBerdiri} onChange={(e) => setUserData({ ...userData, tanggalBerdiri: e.target.value })} type="month" className="form-control" name="tanggalBerdiri" />
+                        <input value={userData.tanggalBerdiri} onChange={(e) => setUserData({ ...userData, tanggalBerdiri: e.target.value })} type="month" className="form-control" name="tanggalBerdiri" required />
                     </div>
 
 
                     <div className="row">
                         <div className="col">
                             <label htmlFor="jenisInstansi" className="form-label"><h5>Jenis Instansi</h5></label>
-                            <select value={userData.jenisInstansi} onChange={(e) => setUserData({ ...userData, jenisInstansi: e.target.value })} className="form-select" name="jenisInstansi">
+                            <select value={userData.jenisInstansi} onChange={(e) => setUserData({ ...userData, jenisInstansi: e.target.value })} className="form-select" name="jenisInstansi" required >
                                 <option selected>Pilih</option>
                                 <option value="Gerakan">Gerakan</option>
                                 <option value="Komunitas">Komunitas</option>
@@ -66,7 +59,7 @@ const Home = () => {
                         </div>
                         <div className="col">
                             <label htmlFor="jenisInstansi" className="form-label"><h5>Jenis Cluster</h5></label>
-                            <select value={userData.jenisCluster} onChange={(e) => setUserData({ ...userData, jenisCluster: e.target.value })} className="form-select" name="jenisCluster">
+                            <select value={userData.jenisCluster} onChange={(e) => setUserData({ ...userData, jenisCluster: e.target.value })} className="form-select" name="jenisCluster" required >
                                 <option selected>Pilih</option>
                                 <option value="Pendidikan">Pendidikan</option>
                                 <option value="Kesehatan">Kesehatan</option>
@@ -77,19 +70,19 @@ const Home = () => {
 
                     <div className="mb-3">
                         <label htmlFor="alamatKantor" className="form-label"><h5>Alamat Kantor</h5></label>
-                        <input value={userData.alamatKantor} onChange={(e) => setUserData({ ...userData, alamatKantor: e.target.value })} type="text" className="form-control" name="alamatKantor" placeholder="Alamat Kantor" />
+                        <input value={userData.alamatKantor} onChange={(e) => setUserData({ ...userData, alamatKantor: e.target.value })} type="text" className="form-control" name="alamatKantor" placeholder="Alamat Kantor" required />
                     </div>
                     <div className="row">
                         <div className="col">
                             <label htmlFor="provinsiKantor" className="form-label"><h5>Provinsi</h5></label>
-                            <select value={userData.provinsiKantor} onChange={(e) => setUserData({ ...userData, provinsiKantor: e.target.value })} className="form-select" name="provinsiKantor">
+                            <select value={userData.provinsiKantor} onChange={(e) => setUserData({ ...userData, provinsiKantor: e.target.value })} className="form-select" name="provinsiKantor" required >
                                 <option selected>Pilih</option>
                                 <option value="...">...</option>
                             </select>
                         </div>
                         <div className="col">
                             <label htmlFor="kotaKantor" className="form-label"><h5>Kota</h5></label>
-                            <select value={userData.kotaKantor} onChange={(e) => setUserData({ ...userData, kotaKantor: e.target.value })} className="form-select" name="kotaKantor">
+                            <select value={userData.kotaKantor} onChange={(e) => setUserData({ ...userData, kotaKantor: e.target.value })} className="form-select" name="kotaKantor" required >
                                 <option selected>Pilih</option>
                                 <option value="...">...</option>
                             </select>
@@ -98,14 +91,14 @@ const Home = () => {
                     <div className="mb-3">
                         <label htmlFor="gambaranInstansi" className="form-label"><h5>Profil/Gambaran Instansi</h5></label>
                         <p>Jelaskan profil/gambaran instansi dalam 1 paragraf singkat</p>
-                        <textarea value={userData.gambaranInstansi} onChange={(e) => setUserData({ ...userData, gambaranInstansi: e.target.value })} className="form-control" name="gambaranInstansi" style={{ width: '550px', height: '100px' }} />
+                        <textarea value={userData.gambaranInstansi} onChange={(e) => setUserData({ ...userData, gambaranInstansi: e.target.value })} className="form-control" name="gambaranInstansi" style={{ width: '550px', height: '100px' }} required />
                     </div>
 
                     <h2>Cakupan Instansi</h2>
                     <div className="mb-3">
                         <label htmlFor="jumlahPenerimaManfaat" className="form-label"><h5>Jumlah Penerima Manfaat</h5></label>
                         <p>Jumlah total seluruh penerima manfaat dari kegiatan yang dilakukan melalui program oleh instansi</p>
-                        <input value={userData.jumlahPenerimaManfaat} onChange={(e) => setUserData({ ...userData, jumlahPenerimaManfaat: e.target.value })} type="number" className="form-control" name="jumlahPenerimaManfaat" placeholder="Jumlah Penerima Manfaat" />
+                        <input value={userData.jumlahPenerimaManfaat} onChange={(e) => setUserData({ ...userData, jumlahPenerimaManfaat: e.target.value })} type="number" className="form-control" name="jumlahPenerimaManfaat" placeholder="Jumlah Penerima Manfaat" required />
                     </div>
 
                     <h2>Berkas Instansi</h2>
