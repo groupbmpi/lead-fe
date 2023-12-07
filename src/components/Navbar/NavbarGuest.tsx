@@ -6,7 +6,7 @@ const NavbarGuest = () => {
   const router = useRouter();
 
   const isLinkActive = (href: string) => {
-    return router.pathname === href;
+    return router.pathname.startsWith(href);
   };
   return (
     <nav className="navbar bg-light navbar-expand-lg p-2">
@@ -20,7 +20,7 @@ const NavbarGuest = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/instance-registration') ? 'active' : ''}`} href="/instance-registration">Registrasi Peserta</Link>
+              <Link className={`nav-link ${isLinkActive('/registration/') ? 'active' : ''}`} href="/registration/instance">Registrasi Peserta</Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link ${isLinkActive('/check-registration-status') ? 'active' : ''}`} href="/check-registration-status">Cek Status Registrasi</Link>

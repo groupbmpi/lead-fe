@@ -6,7 +6,7 @@ const NavbarParticipant = () => {
   const router = useRouter();
 
   const isLinkActive = (href: string) => {
-    return router.pathname === href;
+    return router.pathname.startsWith(href);
   };
 
   const participant = {
@@ -24,19 +24,19 @@ const NavbarParticipant = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/participant-dashboard') ? 'active' : ''}`} href="/participant-dashboard">Beranda</Link>
+              <Link className={`nav-link ${isLinkActive('/participant/dashboard') ? 'active' : ''}`} href="/participant/dashboard">Beranda</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/participant-view-module') ? 'active' : ''}`} href="/participant-view-module">Modul</Link>
+              <Link className={`nav-link ${isLinkActive('/participant/view-module') ? 'active' : ''}`} href="/participant/view-module">Modul</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/participant-view-profile') ? 'active' : ''}`} href="/participant-view-profile">Profil</Link>
+              <Link className={`nav-link ${isLinkActive('/participant/view-profile') ? 'active' : ''}`} href="/participant/view-profile">Profil</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/participant-view-mentor') ? 'active' : ''}`} href="/participant-view-mentor">Lihat Daftar Mentor</Link>
+              <Link className={`nav-link ${isLinkActive('/participant/view-mentor') ? 'active' : ''}`} href="/participant/view-mentor">Lihat Daftar Mentor</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/participant-view-others') ? 'active' : ''}`} href="/participant-view-others">Lihat Peserta Lain</Link>
+              <Link className={`nav-link ${isLinkActive('/participant/view-others') ? 'active' : ''}`} href="/participant/view-others">Lihat Peserta Lain</Link>
             </li>
           </ul>
           <ul className="navbar-nav">
