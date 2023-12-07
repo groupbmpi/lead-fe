@@ -33,12 +33,12 @@ export default function ParticipantSetPassword() {
 
         try {
             if (password.length < 8 || confirmPassword.length < 8) {
-                setError('Password must be at least 8 characters long!');
+                setError('Panjang kata sandi minimal 8 karakter!');
                 setShow(true)
                 return;
             }
             if (password !== confirmPassword) {
-                setError('Passwords do not match!');
+                setError('Kata sandi tidak sama!');
                 setShow(true)
                 return;
             }
@@ -62,13 +62,13 @@ export default function ParticipantSetPassword() {
                     <form onSubmit={handleFormSubmit} className="col-sm-6 col-10">
                         <div className="d-flex flex-column">
                             <label className="form-label">Email Peserta</label>
-                            <input type="email" className="form-control mb-3" name="email" value={email} onChange={handleChange} />
-                            <label className="form-label">Password</label>
-                            <input type="password" className="form-control mb-3" name="password" value={password} onChange={handleChange} />
-                            <label className="form-label">Confirm Password</label>
-                            <input type="password" className="form-control" name="confirmPassword" value={confirmPassword} onChange={handleChange} />
+                            <input type="email" className="form-control mb-3" name="email" value={email} onChange={handleChange} required />
+                            <label className="form-label">Kata Sandi</label>
+                            <input type="password" className="form-control mb-3" name="password" value={password} onChange={handleChange} required/>
+                            <label className="form-label">Ulangi Kata Sandi</label>
+                            <input type="password" className="form-control" name="confirmPassword" value={confirmPassword} onChange={handleChange} required/>
                             <div className="form-text mb-4">
-                                Your password must be at least 8 characters long
+                                Panjang kata sandi minimal 8 karakter!
                             </div>
                             <div className="text-center">
                                 <button type="submit" className="btn btn-primary w-50">Simpan</button>
