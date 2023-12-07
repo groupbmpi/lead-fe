@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
         <title>LEAD Indonesia</title>
       </Head>
       <div className="container d-flex flex-column gap-5 align-items-center justify-content-center vh-100">
-        <div>
+        <div className="d-flex flex-column flex-lg-row align-items-center">
           <Image
             src="/logo/bakrie-logo.png"
             width={200}
@@ -29,17 +30,16 @@ export default function Home() {
             alt="LEAD Logo"
           />
         </div>
-        <div>
-          <a className="btn btn-primary" href="/instance-registration">Registrasi Peserta</a>
-          <a className="btn btn-primary mx-3" href="/check_registration_status">Cek Status Registrasi</a>
-          <div className="dropdown d-inline">
-            <a className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+          <Link className="btn btn-primary w-100" href="/instance_registration">Registrasi Peserta</Link>
+          <Link className="btn btn-primary w-100 mx-3" href="/check_registration_status">Cek Status Registrasi</Link>
+          <div className="dropdown d-inline h-100 w-100">
+            <a className="btn btn-primary dropdown-toggle h-100 w-100 d-flex align-items-center justify-content-center" data-bs-toggle="dropdown" aria-expanded="false">
               Login
             </a>
             <ul className="dropdown-menu">
-              <li><a className="dropdown-item" href="participant_login">Peserta</a></li>
-              <li><a className="dropdown-item" href="mentor_login">Mentor</a></li>
-              <li><a className="dropdown-item" href="admin_login">Admin</a></li>
+              <li><Link className="dropdown-item" href="participant_login">Peserta</Link></li>
+              <li><Link className="dropdown-item" href="mentor_login">Mentor</Link></li>
             </ul>
           </div>
         </div>
