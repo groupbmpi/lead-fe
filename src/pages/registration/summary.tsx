@@ -1,33 +1,21 @@
 import { useRegistration } from '@/contexts/RegistrationContext';
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import React from 'react';
 
 const SummaryRegistration = () => {
   const { userData, setUserData } = useRegistration();
+  const router = useRouter();
   const [confirmedData, setConfirmedData] = useState(false);
   const [confirmedConcept, setConfirmedConcept] = useState(false);
-  const [showTambahButton1, setShowTambahButton1] = useState(true);
-  const [participant1Data, setParticipant1Data] = useState({});
 
-  //   const [error, setError] = useState('')
-
-  //   if (!confirmedData) {
-  //     if(!error){
-  //         setError('Pastikan data yang diisi sudah benar');
-  //     }
-  //     return;
-  //   }
-
-  //   if (!confirmedConcept) {
-  //     if(!error){
-  //         setError('Pastikan anda sudah membaca dan memahami Concept Note');
-  //     }
-  //     return;
-  //   }
-
-  //   setError('')
+  useEffect(() => {
+    if (!userData || Object.keys(userData).length === 0) {
+        router.push('/registration/instance');
+    }
+  }, [userData, router]);
 
   const handleConfirmationDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmedData(e.target.checked);
@@ -45,8 +33,20 @@ const SummaryRegistration = () => {
         <p>Nama Peserta               : {userData.namaPeserta1}</p>
         <p>Email Peserta              : {userData.emailPeserta1}</p>
         <p>Pendidikan Terakhir Peserta: {userData.pendidikanPeserta1}</p>
-        <p>No Whatsapp Peserta        : {userData.pendidikanPeserta1}</p>
-        <Link className="btn btn-primary" href="/participant-registration/participant1">Ubah</Link>
+        <p>No Whatsapp Peserta        : {userData.whatsappPeserta2}</p>
+        <Link className="btn btn-primary" href="/registration/participant-1">Ubah</Link>
+      </div>
+    );
+  };
+
+  const renderParticipant2Data = () => {
+    return (
+      <div>
+        <p>Nama Peserta               : {userData.namaPeserta2}</p>
+        <p>Email Peserta              : {userData.emailPeserta2}</p>
+        <p>Pendidikan Terakhir Peserta: {userData.pendidikanPeserta2}</p>
+        <p>No Whatsapp Peserta        : {userData.whatsappPeserta2}</p>
+        <Link className="btn btn-primary" href="/registration/participant-2">Ubah</Link>
       </div>
     );
   };
@@ -60,34 +60,31 @@ const SummaryRegistration = () => {
         <h2>Ringkasan</h2>
         <h3>Instansi</h3>
         <h5>Profil</h5>
-        <p>Nama Instansi : {userData.namaInstansi}</p>
-        <p>Email Instansi: {userData.emailInstansi}</p>
-        <p>Jenis Instansi: {userData.jenisInstansi}</p>
-        <p>Jenis Cluster : {userData.jenisCluster}</p>
-        <p>Alamat Lengkap: {userData.alamatKantor}, {userData.kotaKantor}, {userData.provinsiKantor}</p>
-        <h5>Jangkauan</h5>
-        <p>Cakupan Jangkauan       : {userData.kotaJangkauan}, {userData.kotaJangkauan}</p>
-        <p>Jumlah Penerima Manfaat : {userData.penerimaManfaat}</p>
-        <p>Target Penerima Manfaat : {userData.targetPenerimaManfaat}</p>
-        <p>Kabupaten/Kota Tercakup : {userData.kotaTercakup}</p>
-        <p>Provinsi Tercakup       : {userData.provinsiTercakup}</p>
+        <p>Nama Instansi            : {userData.namaInstansi}</p>
+        <p>Email Instansi           : {userData.emailInstansi}</p>
+        <p>Tanggal Berdiri Instansi : {userData.tanggalBerdiri}</p>
+        <p>Jenis Instansi           : {userData.jenisInstansi}</p>
+        <p>Jenis Cluster            : {userData.jenisCluster}</p>
+        <p>Alamat Lengkap           : {userData.alamatKantor}, {userData.kotaKantor}, {userData.provinsiKantor}</p>
+        <p>Jumlah Penerima Manfaat  : {userData.penerimaManfaat}</p>
         <Link className="btn btn-primary" href="/registration/instance">Ubah</Link>
         <h3>Peserta</h3>
         <div className="row">
-          {showTambahButton1 && (
-            <div className="col">
-              <div className="d-flex flex-column">
-                <h5>Peserta I</h5>
-                <Link className="btn btn-primary" href="/participant-registration/participant1">Tambah</Link>
-              </div>
-            </div>
-          )}
-          {userData.namaPeserta1 && renderParticipant1Data()}
           <div className="col">
-            <div className="d-flex flex-column">
-              <h5>Peserta II</h5>
-              <Link className="btn btn-primary" href="/participant-registration/participant2">Tambah</Link>
-            </div>
+            <h5>Peserta I</h5>
+            {userData.namaPeserta1 ? renderParticipant1Data() : (
+              <div className="d-flex flex-column">
+                <Link className="btn btn-primary" href="/registration/participant-1">Tambah</Link>
+              </div>
+            )}
+          </div>
+          <div className="col">
+            <h5>Peserta II</h5>
+            {userData.namaPeserta2 ? renderParticipant2Data() : (
+              <div className="d-flex flex-column">
+                <Link className="btn btn-primary" href="/registration/participant-2">Tambah</Link>
+              </div>
+            )}
           </div>
         </div>
         <div>
