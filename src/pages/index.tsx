@@ -30,7 +30,7 @@ export default function Home() {
           />
         </div>
         <div>
-          <a className="btn btn-primary" href="/instance_registration">Registrasi Peserta</a>
+          <a className="btn btn-primary" href="/instance-registration">Registrasi Peserta</a>
           <a className="btn btn-primary mx-3" href="/check_registration_status">Cek Status Registrasi</a>
           <div className="dropdown d-inline">
             <a className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

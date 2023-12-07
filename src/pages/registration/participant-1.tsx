@@ -1,23 +1,31 @@
 import { Console } from 'console';
 import Head from 'next/head'
 import Link from 'next/link'
+import { useState } from 'react'
 import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
+import SummaryRegistration from './summary';
 
 export default function Home() {
     const router = useRouter();
+    const [formData1, setFormData1] = useState({});
+    const [isFormFilled1, setIsFormFilled1] = useState(false);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const registration = new FormData(e.currentTarget);
-        const registrationObject: Record<string, string> = {};
-        registration.forEach((value, key) => {
-            registrationObject[key] = value.toString();
+        const p1_registration = new FormData(e.currentTarget);
+        const p1_registrationObject: Record<string, string> = {};
+
+        p1_registration.forEach((value, key) => {
+            p1_registrationObject[key] = value.toString();
         });
+        setFormData1(p1_registrationObject);
+        setIsFormFilled1(true);
+
         router.push({
         pathname: '/summary-registration',
-        query: registrationObject,
+        query: p1_registrationObject,
         });
     };
     return (

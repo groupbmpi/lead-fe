@@ -10,14 +10,14 @@ export default function Home() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const registration = new FormData(e.currentTarget);
-        const registrationObject: Record<string, string> = {};
-        registration.forEach((value, key) => {
-            registrationObject[key] = value.toString();
+        const p2_registration = new FormData(e.currentTarget);
+        const p2_registrationObject: Record<string, string> = {};
+        p2_registration.forEach((value, key) => {
+            p2_registrationObject[key] = value.toString();
         });
         router.push({
         pathname: '/summary-registration',
-        query: registrationObject,
+        query: p2_registrationObject,
         });
     };
     return (
