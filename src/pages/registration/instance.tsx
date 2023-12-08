@@ -2,12 +2,55 @@ import { useRegistration } from '@/contexts/RegistrationContext'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+
+interface City {
+    id: number;
+    text: string;
+    provinceId: number;
+}
+
+interface Province {
+    id: number;
+    text: string;
+}
 
 const Home = () => {
 
     const router = useRouter();
     const { userData, setUserData } = useRegistration();
+    const [provinceOptions, setProvinceOptions] = useState<Province[]>([]);
+    const [cityOptions, setCityOptions] = useState<{ id: number; text: string, provinceId: number }[]>([]);
+    const [selectedProvince, setSelectedProvince] = useState<string>('');
+    const [selectedProvinceId, setSelectedProvinceId] = useState<number | null>(null);
+
+    const fetchProvince = async () => {
+        try {
+            const response = await fetch('/api/province');
+            const data = await response.json();
+            setProvinceOptions(data);
+        } catch (error) {
+            console.error('Error fetching province data:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchProvince();
+    }, []);
+
+    const fetchCity = async () => {
+        try {
+            const response = await fetch('/api/city');
+            const data = await response.json();
+            setCityOptions(data);
+        } catch (error) {
+            console.error('Error fetching city data:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchCity();
+    }, []);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -75,16 +118,51 @@ const Home = () => {
                     <div className="row">
                         <div className="col">
                             <label htmlFor="provinsiKantor" className="form-label"><h5>Provinsi</h5></label>
-                            <select value={userData.provinsiKantor} onChange={(e) => setUserData({ ...userData, provinsiKantor: e.target.value })} className="form-select" name="provinsiKantor" required >
-                                <option selected>Pilih</option>
-                                <option value="...">...</option>
+                            <select
+                                value={userData.provinsiKantor}
+                                onChange={(e) => {
+                                    const selectedProvinceText = e.target.value;
+                                    setSelectedProvince(selectedProvinceText);
+
+                                    const selectedProvince = provinceOptions.find(
+                                        (province) => province.text === selectedProvinceText
+                                    );
+
+                                    if (selectedProvince) {
+                                        setSelectedProvinceId(selectedProvince.id);
+                                    }
+
+                                    setUserData({ ...userData, provinsiKantor: selectedProvinceText });
+                                }}
+                                className="form-select"
+                                name="provinsiKantor"
+                                required
+                            >
+                                <option disabled selected>Pilih</option>
+                                {provinceOptions.map((province) => (
+                                    <option key={province.id} value={province.text}>
+                                        {province.text}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div className="col">
                             <label htmlFor="kotaKantor" className="form-label"><h5>Kota</h5></label>
-                            <select value={userData.kotaKantor} onChange={(e) => setUserData({ ...userData, kotaKantor: e.target.value })} className="form-select" name="kotaKantor" required >
-                                <option selected>Pilih</option>
-                                <option value="...">...</option>
+                            <select
+                                value={userData.kotaKantor}
+                                onChange={(e) => setUserData({ ...userData, kotaKantor: e.target.value })}
+                                className="form-select"
+                                name="kotaKantor"
+                                required
+                            >
+                                <option disabled selected>Pilih</option>
+                                {cityOptions
+                                    .filter((city) => city.provinceId === selectedProvinceId)
+                                    .map((city) => (
+                                        <option key={city.id} value={city.text}>
+                                            {city.text}
+                                        </option>
+                                    ))}
                             </select>
                         </div>
                     </div>
