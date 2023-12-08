@@ -46,17 +46,17 @@ export default function Home() {
                 <div className="container d-flex flex-column gap-2 align-items-left justify-content-left vh-90">
                     <h1>Profil Peserta 1</h1>
                     <div className="mb-3">
-                        <label htmlFor="namaPeserta2" className="form-label"><h5>Nama Peserta</h5></label>
+                        <label htmlFor="namaPeserta2" className="form-label">Nama Peserta</label>
                         <input value={userData.namaPeserta2} onChange={(e) => setUserData({ ...userData, namaPeserta2: e.target.value })} type="text" className="form-control" name="namaPeserta2" placeholder="Nama Peserta 1" required/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="emailPeserta2" className="form-label"><h5>Email Peserta</h5></label>
+                        <label htmlFor="emailPeserta2" className="form-label">Email Peserta</label>
                         <input value={userData.emailPeserta2} onChange={(e) => setUserData({ ...userData, emailPeserta2: e.target.value })} type="text" className="form-control" name="emailPeserta2" placeholder="Email Peserta 1" required/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="pendidikanPeserta2" className="form-label"><h5>Pendidikan Terakhir Peserta</h5></label>
+                        <label htmlFor="pendidikanPeserta2" className="form-label">Pendidikan Terakhir Peserta</label>
                         <select value={userData.pendidikanPeserta2} onChange={(e) => setUserData({ ...userData, pendidikanPeserta2: e.target.value })} className="form-select" name="pendidikanPeserta2" required>
-                        <option selected>Pilih</option>
+                        <option disabled selected>Pilih</option>
                             <option value="SD/Sederajat">SD/Sederajat</option>
                             <option value="SMP/Sederajat">SMP/Sederajat</option>
                             <option value="SMA/SMK/Sederajat">SMA/SMK/Sederajat</option>
@@ -68,19 +68,19 @@ export default function Home() {
                         </select>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="whatsappPeserta2" className="form-label"><h5>Nomor Whatsapp</h5></label>
+                        <label htmlFor="whatsappPeserta2" className="form-label">Nomor Whatsapp</label>
                         <input value={userData.whatsappPeserta2} onChange={(e) => setUserData({ ...userData, whatsappPeserta2: e.target.value })} type="number" className="form-control" name="whatsappPeserta2" placeholder="cth : 6281234567890" required />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="alasanPeserta2" className="form-label"><h5>Alasan mengikuti LEAD</h5></label>
+                        <label htmlFor="alasanPeserta2" className="form-label">Alasan mengikuti LEAD</label>
                         <textarea value={userData.alasanPeserta2} onChange={(e) => setUserData({ ...userData, alasanPeserta2: e.target.value })} className="form-control" name="alasanPeserta2" style={{ width: '550px', height: '100px' }} required />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="ktpPeserta2" className="form-label"><h5>Unggah Kartu Tanda Penduduk (KTP)</h5></label>
+                        <label htmlFor="ktpPeserta2" className="form-label">Unggah Kartu Tanda Penduduk (KTP)</label>
                         <input value={userData.ktpPeserta2} onChange={(e) => setUserData({ ...userData, ktpPeserta2: e.target.value })} type="url" className="form-control" name="ktpPeserta2" placeholder="Link Kartu Tanda Penduduk" required />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="cvPeserta2" className="form-label"><h5>Unggah Curriculum Vitae</h5></label>
+                        <label htmlFor="cvPeserta2" className="form-label">Unggah Curriculum Vitae</label>
                         <input value={userData.cvPeserta2} onChange={(e) => setUserData({ ...userData, cvPeserta2: e.target.value })} type="url" className="form-control" name="cvPeserta2" placeholder="Link Curriculum Vitae" required />
                     </div>
                     <button type="submit" className="btn btn-primary">Tambahkan</button>

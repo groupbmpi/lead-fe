@@ -97,6 +97,10 @@ const SummaryRegistration = () => {
           <LabelValuePairInstance label="Jenis Instansi" value={userData.jenisInstansi} />
           <LabelValuePairInstance label="Jenis Cluster" value={userData.jenisCluster} />
           <LabelValuePairInstance label="Alamat Lengkap" value={fullAddress} />
+          <LabelValuePairInstance label="Instagram Instansi" value={userData.instagramInstansi} />
+          <LabelValuePairInstance label="Website Instansi" value={userData.websiteInstansi} />
+          <LabelValuePairInstance label="Tiktok Instansi" value={userData.tiktokInstansi} />
+          <LabelValuePairInstance label="Youtube Instansi" value={userData.youtubeInstansi} />
           <LabelValuePairInstance label="Jumlah Penerima Manfaat" value={userData.jumlahPenerimaManfaat} />
           <Link className="btn btn-primary" href="/registration/instance">Ubah</Link>
         </div>
