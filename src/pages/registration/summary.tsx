@@ -60,8 +60,14 @@ const SummaryRegistration = () => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <LabelValuePair label="Nama Peserta" value={userData.namaPeserta1} />
         <LabelValuePair label="Email Peserta" value={userData.emailPeserta1} />
+        <LabelValuePair label="Posisi Peserta dalam Instansi" value={userData.posisiPeserta1} />
         <LabelValuePair label="Pendidikan Terakhir Peserta" value={userData.pendidikanPeserta1} />
+        <LabelValuePair label="Jurusan Pendidikan Terakhir Peserta" value={userData.jurusanPeserta1} />
+        <LabelValuePair label="Fokus Isu Peserta" value={userData.fokusIsuPeserta1} />
         <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta1} />
+        {/* <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta1} />
+        <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta1} />
+        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta1} /> */}
         <Link className="btn btn-primary" href="/registration/participant-1">Ubah</Link>
       </div>
     );
@@ -72,8 +78,14 @@ const SummaryRegistration = () => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <LabelValuePair label="Nama Peserta" value={userData.namaPeserta2} />
         <LabelValuePair label="Email Peserta" value={userData.emailPeserta2} />
+        <LabelValuePair label="Posisi Peserta dalam Instansi" value={userData.posisiPeserta2} />
         <LabelValuePair label="Pendidikan Terakhir Peserta" value={userData.pendidikanPeserta2} />
+        <LabelValuePair label="Jurusan Pendidikan Terakhir Peserta" value={userData.jurusanPeserta2} />
+        <LabelValuePair label="Fokus Isu Peserta" value={userData.fokusIsuPeserta2} />
         <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta2} />
+        {/* <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta2} />
+        <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta2} />
+        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta2} /> */}
         <Link className="btn btn-primary" href="/registration/participant-2">Ubah</Link>
       </div>
     );
@@ -81,6 +93,7 @@ const SummaryRegistration = () => {
 
   const fullAddress = `${userData.alamatKantor}, ${userData.kotaKantor}, ${userData.provinsiKantor}`;
 
+  console.log(userData)
   return (
     <>
       <Head>
@@ -96,6 +109,7 @@ const SummaryRegistration = () => {
           <LabelValuePairInstance label="Tahun/Bulan Berdiri Instansi" value={userData.tanggalBerdiri} />
           <LabelValuePairInstance label="Jenis Instansi" value={userData.jenisInstansi} />
           <LabelValuePairInstance label="Jenis Cluster" value={userData.jenisCluster} />
+          <LabelValuePairInstance label="Fokus Isu" value={userData.fokusIsu} />
           <LabelValuePairInstance label="Alamat Lengkap" value={fullAddress} />
           <LabelValuePairInstance label="Instagram Instansi" value={userData.instagramInstansi} />
           <LabelValuePairInstance label="Website Instansi" value={userData.websiteInstansi} />
@@ -142,7 +156,7 @@ const SummaryRegistration = () => {
             onChange={handleConfirmationConceptChange}
           />
           <label htmlFor="confirmConcept">Saya sudah membaca dan memahami
-            <Link href="https://bit.ly/LEADBCF-2023">Concept Note</Link>
+            <Link href="https://bit.ly/LEADBCF-2023"> Concept Note</Link>
           </label>
         </div>
         <button className="btn btn-primary" onClick={handleButtonClick} disabled={buttonDisabled}>

@@ -97,7 +97,7 @@ const Home = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="emailInstansi" className="form-label">Email Instansi</label>
-                            <input value={userData.emailInstansi} onChange={(e) => setUserData({ ...userData, emailInstansi: e.target.value })} type="text" className="form-control" name="emailInstansi" placeholder="Email Instansi" required />
+                            <input value={userData.emailInstansi} onChange={(e) => setUserData({ ...userData, emailInstansi: e.target.value })} type="email" className="form-control" name="emailInstansi" placeholder="cth: a@gmail.com" required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="tanggalBerdiri" className="form-label">Bulan/Tahun Instansi</label>
@@ -226,28 +226,28 @@ const Home = () => {
                         <div className="mb-3">
                             <label htmlFor="gambaranInstansi" className="form-label">Profil/Gambaran Instansi</label>
                             <p>Jelaskan profil/gambaran instansi dalam 1 paragraf singkat</p>
-                            <textarea value={userData.gambaranInstansi} onChange={(e) => setUserData({ ...userData, gambaranInstansi: e.target.value })} className="form-control" name="gambaranInstansi" style={{ width: '550px', height: '100px' }} required />
+                            <textarea value={userData.gambaranInstansi} onChange={(e) => setUserData({ ...userData, gambaranInstansi: e.target.value })} className="form-control" name="gambaranInstansi" style={{ width: '550px', height: '100px' }} required/>
                         </div>
                         <h2>Media Sosial</h2>
                         <div className="mb-3">
                             <label htmlFor="instagramInstansi" className="form-label">Link Instagram Instansi</label>
-                            <p>Jika tidak ada isi dengan tanda '-'</p>
-                            <input value={userData.instagramInstansi} onChange={(e) => setUserData({ ...userData, instagramInstansi: e.target.value })} type="url" className="form-control" name="instagramInstansi" placeholder="https://instagram.com" required />
+                            <p>Kosongkan jika tidak ada</p>
+                            <input value={userData.instagramInstansi} onChange={(e) => setUserData({ ...userData, instagramInstansi: e.target.value })} type="url" className="form-control" name="instagramInstansi" placeholder="https://instagram.com" />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="websiteInstansi" className="form-label">Link Website Instansi</label>
-                            <p>Jika tidak ada isi dengan tanda '-'</p>
-                            <input value={userData.websiteInstansi} onChange={(e) => setUserData({ ...userData, websiteInstansi: e.target.value })} type="url" className="form-control" name="websiteInstansi" placeholder="https://google.com" required />
+                            <p>Kosongkan jika tidak ada</p>
+                            <input value={userData.websiteInstansi} onChange={(e) => setUserData({ ...userData, websiteInstansi: e.target.value })} type="url" className="form-control" name="websiteInstansi" placeholder="https://google.com" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="tiktokInstansi" className="form-label">Link Instagram Instansi</label>
-                            <p>Jika tidak ada isi dengan tanda '-'</p>
-                            <input value={userData.tiktokInstansi} onChange={(e) => setUserData({ ...userData, tiktokInstansi: e.target.value })} type="url" className="form-control" name="tiktokInstansi" placeholder="https://tiktok.com" required />
+                            <label htmlFor="tiktokInstansi" className="form-label">Link Tiktok Instansi</label>
+                            <p>Kosongkan jika tidak ada</p>
+                            <input value={userData.tiktokInstansi} onChange={(e) => setUserData({ ...userData, tiktokInstansi: e.target.value })} type="url" className="form-control" name="tiktokInstansi" placeholder="https://tiktok.com" />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="youtubeInstansi" className="form-label">Link Instagram Instansi</label>
-                            <p>Jika tidak ada isi dengan tanda '-'</p>
-                            <input value={userData.youtubeInstansi} onChange={(e) => setUserData({ ...userData, youtubeInstansi: e.target.value })} type="url" className="form-control" name="youtubeInstansi" placeholder="https://youtube.com" required />
+                            <label htmlFor="youtubeInstansi" className="form-label">Link Youtube Instansi</label>
+                            <p>Kosongkan jika tidak ada</p>
+                            <input value={userData.youtubeInstansi} onChange={(e) => setUserData({ ...userData, youtubeInstansi: e.target.value })} type="url" className="form-control" name="youtubeInstansi" placeholder="https://youtube.com" />
                         </div>
                         <h2>Cakupan Instansi</h2>
                         <div className="mb-3">
