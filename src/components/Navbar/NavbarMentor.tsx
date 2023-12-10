@@ -7,7 +7,7 @@ const NavbarMentor = () => {
   const router = useRouter();
 
   const isLinkActive = (href: string) => {
-    return router.pathname === href;
+    return router.pathname.startsWith(href);
   };
 
   const userName = getUserName();
@@ -24,19 +24,19 @@ const NavbarMentor = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-dashboard') ? 'active' : ''}`} href="/mentor-dashboard">Beranda</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/dashboard') ? 'active' : ''}`} href="/mentor/dashboard">Beranda</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-view-profile') ? 'active' : ''}`} href="/mentor-profile">Profil</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/profile') ? 'active' : ''}`} href="/mentor/profile">Profil</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-view-participant-status') ? 'active' : ''}`} href="/mentor-view-participant-status">Peserta</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/view-participant') ? 'active' : ''}`} href="/mentor/view-participant">Peserta</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-task') ? 'active' : ''}`} href="/mentor-task">Tugas</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/task') ? 'active' : ''}`} href="/mentor/task">Tugas</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-mentoring') ? 'active' : ''}`} href="/mentor-mentoring">Mentoring</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/mentoring') ? 'active' : ''}`} href="/mentor/mentoring">Mentoring</Link>
             </li>
           </ul>
           <ul className="navbar-nav">
