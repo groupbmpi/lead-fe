@@ -1,3 +1,4 @@
+import { getRole, getUserName, handleLogout } from "@/utils/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,10 +10,8 @@ const NavbarAdmin = () => {
     return router.pathname.startsWith(href);
   };
 
-  const admin = {
-    name: "Admin",
-    role: "SUPERADMIN"
-  }
+  const userName = getUserName();
+  const role = getRole();
   return (
     <nav className="navbar bg-light navbar-expand-lg p-2">
       <div className="container-fluid">
@@ -27,7 +26,7 @@ const NavbarAdmin = () => {
             <li className="nav-item">
               <Link className={`nav-link ${isLinkActive('/admin/dashboard') ? 'active' : ''}`} href="/admin/dashboard">Beranda</Link>
             </li>
-            { admin.role === "SUPERADMIN" && 
+            {role === "SUPERADMIN" &&
               <li className="nav-item">
                 <Link className={`nav-link ${isLinkActive('/admin/information-banner') ? 'active' : ''}`} href="/admin/information-banner">Information Banner</Link>
               </li>
@@ -46,7 +45,7 @@ const NavbarAdmin = () => {
                 <li><Link className="dropdown-item" href="/admin/view-instances">Pendaftar (Instansi)</Link></li>
                 <li><Link className="dropdown-item" href="/admin/view-participant">Peserta</Link></li>
                 <li><Link className="dropdown-item" href="/admin/view-mentor">Mentor</Link></li>
-                { admin.role === 'SUPERADMIN' && 
+                {role === 'SUPERADMIN' &&
                   <li><Link className="dropdown-item" href="/admin/view-admin">Admin</Link></li>
                 }
               </ul>
@@ -54,10 +53,10 @@ const NavbarAdmin = () => {
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item d-lg-flex d-none me-2 align-items-center">
-              <span>Hi, {admin.name}</span>
+              <span>Hi, {userName}</span>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#">Logout</Link>
+              <button className="nav-link" onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>

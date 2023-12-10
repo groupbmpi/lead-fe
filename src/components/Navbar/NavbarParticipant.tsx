@@ -1,17 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { getUserName, handleLogout } from "@/utils/auth";
 
 const NavbarParticipant = () => {
   const router = useRouter();
-
   const isLinkActive = (href: string) => {
     return router.pathname.startsWith(href);
   };
+  const userName = getUserName();
 
-  const participant = {
-    name: "Participant"
-  }
   return (
     <nav className="navbar bg-light navbar-expand-lg p-2">
       <div className="container-fluid">
@@ -41,10 +39,10 @@ const NavbarParticipant = () => {
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item d-lg-flex d-none me-2 align-items-center">
-              <span>Hi, {participant.name}</span>
+              <span>Hi, {userName}</span>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#">Logout</Link>
+              <button className="nav-link" onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>
