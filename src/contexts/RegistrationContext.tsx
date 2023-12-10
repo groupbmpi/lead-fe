@@ -9,7 +9,11 @@ interface RegistrationContextProps {
 
 const RegistrationContext = createContext<RegistrationContextProps | undefined>(undefined);
 
-export const RegistrationProvider = ({ children }: { children: ReactNode }) => {
+interface RegistrationProviderProps {
+  children: ReactNode;
+}
+
+export const RegistrationProvider: FC<RegistrationProviderProps> = ({ children }) => {
   const [userData, setUserData] = useState<UserData>({});
 
   return (

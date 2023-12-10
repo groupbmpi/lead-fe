@@ -34,7 +34,6 @@ export default function Home() {
 
         router.push({
         pathname: '/registration/summary',
-        query: participantRegistrationData,
         });
     };
     return (
@@ -92,7 +91,7 @@ export default function Home() {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="whatsappPeserta2" className="form-label">Nomor Whatsapp</label>
-                        <input value={userData.whatsappPeserta2} onChange={(e) => setUserData({ ...userData, whatsappPeserta2: e.target.value })} type="number" className="form-control" name="whatsappPeserta2" placeholder="cth : 6281234567890" required />
+                        <input value={userData.whatsappPeserta2} onChange={(e) => setUserData({ ...userData, whatsappPeserta2: e.target.value })} type="tel" className="form-control" name="whatsappPeserta2" placeholder="cth : 6281234567890" required />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="alasanPeserta2" className="form-label">Alasan mengikuti LEAD</label>

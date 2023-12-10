@@ -1,13 +1,48 @@
-import NavbarMentor from '@/components/Navbar/NavbarMentor';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useRegistration } from '@/contexts/RegistrationContext';
-import Head from 'next/head'
-import router from 'next/router';
-import { FormEvent } from 'react';
+import NavbarMentor from '@/components/Navbar/NavbarMentor';
+import Head from 'next/head';
 
-export default function MentorProfile() {
+interface UserData {
+    image: string | null; 
+}
 
+const MentorProfile: React.FC = () => {
+    const router = useRouter();
     const { userData, setUserData } = useRegistration();
+    const [formData, setFormData] = useState({ ...userData });
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+    let allowed = false;
+    // useEffect(() => {
+    //     allowed = checkAuth(['MENTOR', 'ADMIN']);
+    //     if (!allowed) {
+    //         router.push('/mentor-login');
+    //     }
+    // });
+
     
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file: File | null = e.target.files ? e.target.files[0] : null;
+        setSelectedImage(file);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    image: event.target?.result as string,
+                }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleUpload = () => {
+        console.log(selectedImage);
+    };
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -19,13 +54,16 @@ export default function MentorProfile() {
         setUserData((prevUserData) => ({
             ...prevUserData,
             ...mentorProfileData,
+            image: formData.image,
         }));
-        router.push('/mentor/profile');
+        router.push('/mentor/profile-view');
     };
-    
+
+    console.log(userData)
     return (
         <>
             <div className="d-flex flex-column min-vh-100">
+                {/* {allowed && <NavbarMentor />} */}
                 <NavbarMentor />
                 <div className="container-fluid w-sm-50 w-100 align-items-center text-center justify-content-center d-flex flex-column flex-grow-1">
                     <form onSubmit={handleSubmit}>
@@ -35,7 +73,9 @@ export default function MentorProfile() {
                         <h1>Profil Mentor</h1>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="emailMentor" className="form-label">Email</label>
-                            <input value={userData.emailMentor} readOnly type="email" className="form-control" name="emailMentor" required/>
+                            <div className="col-sm-10">
+                                <input type="text" readOnly className="form-control-plaintext" id="emailMentor" value="email@example.com"/> 
+                            </div>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="namaMentor" className="form-label">Nama Lengkap</label>
@@ -47,7 +87,7 @@ export default function MentorProfile() {
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="noHPMentor" className="form-label">No Handphone</label>
-                            <input value={userData.noHPMentor} onChange={(e) => setUserData({ ...userData, noHPMentor: e.target.value })} type="number" className="form-control" name="noHPMentor" placeholder="cth : 6281234567890" required/>
+                            <input value={userData.noHPMentor} onChange={(e) => setUserData({ ...userData, noHPMentor: e.target.value })} type="tel" className="form-control" name="noHPMentor" placeholder="cth : 6281234567890" required/>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="genderMentor" className="form-label">Gender</label>
@@ -84,15 +124,17 @@ export default function MentorProfile() {
                             </select>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="fotoMentor" className="form-label">Unggah Foto Profil</label>
-                            <input value={userData.fotoMentor} onChange={(e) => setUserData({ ...userData, fotoMentor: e.target.value })} type="file" name="fotoMentor" accept=".jpg, .jpeg, .png" className="form-control"
-                            />
+                            <label htmlFor="fotoMentor" className="form-label">Upload Foto</label>
+                            <input type="file" accept=".jpg, .png, .jpeg" onChange={handleImageChange} />
                         </div>
-                        
-                        <button type="submit" className="btn btn-primary">Simpan</button>
+                        <button type="submit" className="btn btn-primary" onClick={handleUpload}>
+                            Simpan
+                        </button>
                     </form>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
+
+export default MentorProfile;
