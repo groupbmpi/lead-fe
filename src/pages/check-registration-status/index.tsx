@@ -1,17 +1,23 @@
 import NavbarGuest from '@/components/Navbar/NavbarGuest'
+import { redirectLoggedInUser } from '@/utils/auth'
 import Head from 'next/head'
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 
 interface StatusPendaftaran {
-  namaInstansi: string,
+  name: string,
   status: string
 }
 
 export default function CheckRegistrationStatus() {
+  useEffect(() => {
+    redirectLoggedInUser();
+  });
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<StatusPendaftaran | null>(null);
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 
   const handleEmailChange = (e: { target: { value: SetStateAction<string>; }; }) => {
     setEmail(e.target.value);
@@ -21,36 +27,33 @@ export default function CheckRegistrationStatus() {
     e.preventDefault();
 
     try {
-      // const response = await fetch('/api/getInformation', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ email }),
-      // });
+      const response = await fetch(`${backendUrl}/api/v1/instance/status`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   setModalContent(data);
-      //   setShowModal(true);
-      // } else {
-      //   // Handle error
-      // }
-      const data = {
-        namaInstansi: "Instansi",
-        status: "Lolos"
+      if (response.ok) {
+        const res = await response.json();
+        setModalContent(res.data);
+        setShowModal(true);
+      } else {
+        setModalContent(null);
+        setShowModal(true);
       }
-      setModalContent(data);
-      setShowModal(true)
 
     } catch (error) {
-      console.error('Error:', error);
+      setModalContent(null);
+      setShowModal(true);
     }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
   return (
     <>
       <Head>
@@ -80,7 +83,7 @@ export default function CheckRegistrationStatus() {
         <Modal.Body>
           {modalContent ? (
             <>
-              <p>Nama Instansi: {modalContent.namaInstansi}</p>
+              <p>Nama Instansi: {modalContent.name}</p>
               <p>Status Pendaftaran: {modalContent.status}</p>
             </>
           ) : (

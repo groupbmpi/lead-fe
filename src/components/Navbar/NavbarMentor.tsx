@@ -1,3 +1,4 @@
+import { getMentorCategory, getUserName, handleLogout } from "@/utils/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,13 +7,11 @@ const NavbarMentor = () => {
   const router = useRouter();
 
   const isLinkActive = (href: string) => {
-    return router.pathname === href;
+    return router.pathname.startsWith(href);
   };
 
-  const mentor = {
-    name: "Mentor",
-    category: "Cluster"
-  }
+  const userName = getUserName();
+  const category = getMentorCategory();
   return (
     <nav className="navbar bg-light navbar-expand-lg p-2">
       <div className="container-fluid">
@@ -25,30 +24,30 @@ const NavbarMentor = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-dashboard') ? 'active' : ''}`} href="/mentor-dashboard">Beranda</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/dashboard') ? 'active' : ''}`} href="/mentor/dashboard">Beranda</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-view-profile') ? 'active' : ''}`} href="/mentor-profile">Profil</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/profile') ? 'active' : ''}`} href="/mentor/profile">Profil</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-view-participant-status') ? 'active' : ''}`} href="/mentor-view-participant-status">Peserta</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/view-participant') ? 'active' : ''}`} href="/mentor/view-participant">Peserta</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-task') ? 'active' : ''}`} href="/mentor-task">Tugas</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/task') ? 'active' : ''}`} href="/mentor/task">Tugas</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${isLinkActive('/mentor-mentoring') ? 'active' : ''}`} href="/mentor-mentoring">Mentoring</Link>
+              <Link className={`nav-link ${isLinkActive('/mentor/mentoring') ? 'active' : ''}`} href="/mentor/mentoring">Mentoring</Link>
             </li>
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item d-lg-flex d-none me-2 align-items-center">
-              <span className="bg-info bg-gradient rounded-pill px-3 py-1">Mentor {mentor.category}</span>
+              <span className="bg-info bg-gradient rounded-pill px-3 py-1">Mentor {category}</span>
             </li>
             <li className="nav-item d-lg-flex d-none me-2 align-items-center">
-              <span>{mentor.name}</span>
+              <span>{userName}</span>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#">Logout</Link>
+              <button className="nav-link" onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>
