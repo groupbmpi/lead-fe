@@ -1,3 +1,4 @@
+import { getMentorCategory, getUserName, handleLogout } from "@/utils/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,10 +10,8 @@ const NavbarMentor = () => {
     return router.pathname === href;
   };
 
-  const mentor = {
-    name: "Mentor",
-    category: "Cluster"
-  }
+  const userName = getUserName();
+  const category = getMentorCategory();
   return (
     <nav className="navbar bg-light navbar-expand-lg p-2">
       <div className="container-fluid">
@@ -42,13 +41,13 @@ const NavbarMentor = () => {
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item d-lg-flex d-none me-2 align-items-center">
-              <span className="bg-info bg-gradient rounded-pill px-3 py-1">Mentor {mentor.category}</span>
+              <span className="bg-info bg-gradient rounded-pill px-3 py-1">Mentor {category}</span>
             </li>
             <li className="nav-item d-lg-flex d-none me-2 align-items-center">
-              <span>{mentor.name}</span>
+              <span>{userName}</span>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#">Logout</Link>
+              <button className="nav-link" onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>

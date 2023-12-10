@@ -1,6 +1,7 @@
 import NavbarGuest from '@/components/Navbar/NavbarGuest'
+import { redirectLoggedInUser } from '@/utils/auth'
 import Head from 'next/head'
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 
 interface StatusPendaftaran {
@@ -9,6 +10,9 @@ interface StatusPendaftaran {
 }
 
 export default function CheckRegistrationStatus() {
+  useEffect(() => {
+    redirectLoggedInUser();
+  });
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<StatusPendaftaran | null>(null);
