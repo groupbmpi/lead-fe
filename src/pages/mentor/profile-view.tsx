@@ -1,5 +1,6 @@
 import NavbarMentor from '@/components/Navbar/NavbarMentor';
 import { useRegistration } from '@/contexts/RegistrationContext';
+import { getEmail, getUserName, checkAuth } from '@/utils/auth';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -9,7 +10,21 @@ const MentorProfileView = () => {
     const { userData } = useRegistration();
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [displayedImage, setDisplayedImage] = useState<string | null>(null);
+    const email = getEmail();
+    const userName = getUserName();
 
+    const [allowed, setAllowed] = useState(false);
+    useEffect(() => {
+        const checkAuthentication = async () => {
+            const isAllowed = await checkAuth(['MENTOR']);
+            setAllowed(isAllowed);
+
+            if (!isAllowed) {
+                router.push('/mentor-login');
+            }
+        };
+        checkAuthentication();
+    });
     useEffect(() => {
         if (!userData || Object.keys(userData).length === 0) {
             router.push('/mentor/profile');
@@ -53,7 +68,7 @@ const MentorProfileView = () => {
     console.log(userData)
     return (
         <>
-            {/* {allowed && <NavbarMentor />} */}
+            {allowed && <NavbarMentor />}
             <NavbarMentor/>
             <div className="d-flex flex-column min-vh-100 align-items-center">
                 <div className="container mt-3 mb-3">
@@ -85,8 +100,8 @@ const MentorProfileView = () => {
                         ) : (
                             <p>No image uploaded yet</p>
                         )}
-                        <h5 style={{ textAlign: 'center', padding: '10px' }}><b>{userData.namaMentor}</b></h5>
-                        <p style={{ textAlign: 'center' }}>example@gmail.com</p>
+                        <h5 style={{ textAlign: 'center', padding: '10px' }}><b>{userName}</b></h5>
+                        <p style={{ textAlign: 'center' }}>{email}</p>
                         </div>
                     </div>
                 </div>

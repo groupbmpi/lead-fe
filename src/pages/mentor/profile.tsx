@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useRegistration } from '@/contexts/RegistrationContext';
 import NavbarMentor from '@/components/Navbar/NavbarMentor';
 import Head from 'next/head';
+import { getUserName, getEmail, checkAuth } from '@/utils/auth';
 
 interface UserData {
     image: string | null; 
@@ -13,14 +14,21 @@ const MentorProfile: React.FC = () => {
     const { userData, setUserData } = useRegistration();
     const [formData, setFormData] = useState({ ...userData });
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const email = getEmail();
+    const userName = getUserName();
 
-    let allowed = false;
-    // useEffect(() => {
-    //     allowed = checkAuth(['MENTOR', 'ADMIN']);
-    //     if (!allowed) {
-    //         router.push('/mentor-login');
-    //     }
-    // });
+    const [allowed, setAllowed] = useState(false);
+    useEffect(() => {
+        const checkAuthentication = async () => {
+            const isAllowed = await checkAuth(['MENTOR']);
+            setAllowed(isAllowed);
+
+            if (!isAllowed) {
+                router.push('/mentor-login');
+            }
+        };
+        checkAuthentication();
+    });
 
     
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +71,7 @@ const MentorProfile: React.FC = () => {
     return (
         <>
             <div className="d-flex flex-column min-vh-100">
-                {/* {allowed && <NavbarMentor />} */}
+                {allowed && <NavbarMentor />}
                 <NavbarMentor />
                 <div className="container-fluid w-sm-50 w-100 align-items-center text-center justify-content-center d-flex flex-column flex-grow-1">
                     <form onSubmit={handleSubmit}>
@@ -74,12 +82,12 @@ const MentorProfile: React.FC = () => {
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="emailMentor" className="form-label">Email</label>
                             <div className="col-sm-10">
-                                <input type="text" readOnly className="form-control-plaintext" id="emailMentor" value="email@example.com"/> 
+                                <input type="text" readOnly className="form-control-plaintext" id="emailMentor" value={email}/> 
                             </div>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="namaMentor" className="form-label">Nama Lengkap</label>
-                            <input value={userData.namaMentor} onChange={(e) => setUserData({ ...userData, namaMentor: e.target.value })} type="text" className="form-control" name="namaMentor" required/>
+                            <input value={userName} onChange={(e) => setUserData({ ...userData, namaMentor: e.target.value })} type="text" className="form-control" name="namaMentor" required/>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="tanggalLahirMentor" className="form-label">Tanggal Lahir</label>

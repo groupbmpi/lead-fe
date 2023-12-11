@@ -7,14 +7,14 @@ import { jenisCluster } from '../../../data/jenisCluster';
 import { fokusIsu } from '../../../data/fokusIsu';
 
 interface City {
-    id: number;
-    text: string;
-    provinceId: number;
+    city_id: number;
+    name: string;
+    province_id: number;
 }
 
 interface Province {
-    id: number;
-    text: string;
+    province_id: number;
+    name: string;
 }
 
 interface Cluster {
@@ -33,17 +33,18 @@ const Home = () => {
     const router = useRouter();
     const { userData, setUserData } = useRegistration();
     const [provinceOptions, setProvinceOptions] = useState<Province[]>([]);
-    const [cityOptions, setCityOptions] = useState<{ id: number; text: string; provinceId: number }[]>([]);
+    const [cityOptions, setCityOptions] = useState<City[]>([]);
     const [selectedProvince, setSelectedProvince] = useState<string>('');
     const [selectedProvinceId, setSelectedProvinceId] = useState<number | null>(null);
     const [selectedCluster, setSelectedCluster] = useState<string>('');
     const [selectedClusterId, setSelectedClusterId] = useState<number | null>(null);
 
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     const fetchProvince = async () => {
         try {
-            const response = await fetch('/api/province');
-            const data = await response.json();
-            setProvinceOptions(data);
+            const response = await fetch(`${backendUrl}/api/v1/province`);
+            const res = await response.json();
+            setProvinceOptions(res.data);
         } catch (error) {
             console.error('Error fetching province data:', error);
         }
@@ -55,9 +56,10 @@ const Home = () => {
 
     const fetchCity = async () => {
         try {
-            const response = await fetch('/api/city');
-            const data = await response.json();
-            setCityOptions(data);
+            const response = await fetch(`${backendUrl}/api/v1/city`);
+            const res = await response.json();
+            console.log(res.data);
+            setCityOptions(res.data);
         } catch (error) {
             console.error('Error fetching city data:', error);
         }
@@ -182,11 +184,11 @@ const Home = () => {
                                         setSelectedProvince(selectedProvinceText);
 
                                         const selectedProvince = provinceOptions.find(
-                                            (province) => province.text === selectedProvinceText
+                                            (province) => province.name === selectedProvinceText
                                         );
 
                                         if (selectedProvince) {
-                                            setSelectedProvinceId(selectedProvince.id);
+                                            setSelectedProvinceId(selectedProvince.province_id);
                                         }
 
                                         setUserData({ ...userData, provinsiKantor: selectedProvinceText });
@@ -197,8 +199,8 @@ const Home = () => {
                                 >
                                     <option disabled selected>Pilih</option>
                                     {provinceOptions.map((province) => (
-                                        <option key={province.id} value={province.text}>
-                                            {province.text}
+                                        <option key={province.province_id} value={province.name}>
+                                            {province.name}
                                         </option>
                                     ))}
                                 </select>
@@ -214,10 +216,10 @@ const Home = () => {
                                 >
                                     <option disabled selected>Pilih</option>
                                     {cityOptions
-                                        .filter((city) => city.provinceId === selectedProvinceId)
+                                        .filter((city) => city.province_id === selectedProvinceId)
                                         .map((city) => (
-                                            <option key={city.id} value={city.text}>
-                                                {city.text}
+                                            <option key={city.city_id} value={city.name}>
+                                                {city.name}
                                             </option>
                                         ))}
                                 </select>

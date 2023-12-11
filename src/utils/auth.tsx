@@ -5,6 +5,7 @@ import router from 'next/router';
 interface DecodedToken {
     id: number | string;
     role: string;
+    email: string;
     name: string;
     iat: number;
     exp: number;
@@ -25,7 +26,7 @@ export const decodeToken = (token: string | null): DecodedToken | null => {
     }
 };
 
-export const checkAuth = (requiredRoles: string[]): boolean => {
+export const checkAuth = async (requiredRoles: string[]): Promise<boolean> => {
     const token = Cookies.get('token');
     if (!token) {
         return false;
@@ -44,6 +45,19 @@ export const checkAuth = (requiredRoles: string[]): boolean => {
 
     return requiredRoles.includes(decodedToken.role);
 };
+
+export const getEmail = (): string => {
+    const token = Cookies.get('token');
+    if (!token) {
+        return 'User';
+    }
+    const decodedToken = decodeToken(token);
+    if (decodedToken) {
+        return decodedToken.email;
+    } else {
+        return 'User';
+    }
+}
 
 export const getUserName = (): string => {
     const token = Cookies.get('token');
@@ -107,9 +121,9 @@ export const handleLogout = async () => {
     }
 };
 
-export const redirectLoggedInUser = () => {
+export const redirectLoggedInUser = async () => {
     const loggedIn = checkAuth(['MENTOR', 'ADMIN', 'PARTICIPANT', 'SUPERADMIN']);
-    if (loggedIn) {
+    if (await loggedIn) {
         const role = getRole();
         if (role === 'MENTOR') {
             router.push('/mentor/dashboard')

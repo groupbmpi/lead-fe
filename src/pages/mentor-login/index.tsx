@@ -47,6 +47,7 @@ export default function ParticipantLogin() {
             if (response.ok) {
                 const res = await response.json();
                 cookies.set('token', res.data.token, { path: '/', secure: process.env.NODE_ENV === 'production' });
+                console.log(cookies.get('token'));
                 router.push('/mentor/dashboard');
             } else {
                 const errorData = await response.json();

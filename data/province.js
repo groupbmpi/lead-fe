@@ -1,10 +1,10 @@
 export const province = [
     {
-        id: 1,
-        text: "Jawa Barat",
+        province_id: 1,
+        name: "Jawa Barat",
     },
     {
-        id: 2,
-        text: "Jawa Tengah",
+        province_id: 2,
+        name: "Jawa Tengah",
     },
 ]
