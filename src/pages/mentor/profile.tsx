@@ -133,7 +133,7 @@ const MentorProfile: React.FC = () => {
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="fotoMentor" className="form-label">Upload Foto</label>
-                            <input type="file" accept=".jpg, .png, .jpeg" onChange={handleImageChange} />
+                            <input type="file" accept=".jpg, .png, .jpeg" onChange={handleImageChange} required/>
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={handleUpload}>
                             Simpan
