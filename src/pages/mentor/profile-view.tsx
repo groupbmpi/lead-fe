@@ -1,6 +1,6 @@
 import NavbarMentor from '@/components/Navbar/NavbarMentor';
 import { useRegistration } from '@/contexts/RegistrationContext';
-import { getEmail, getUserName, checkAuth } from '@/utils/auth';
+import { getEmail, getUserName, getMentorCategory, checkAuth } from '@/utils/auth';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +12,7 @@ const MentorProfileView = () => {
     const [displayedImage, setDisplayedImage] = useState<string | null>(null);
     const email = getEmail();
     const userName = getUserName();
+    const mentorCategory = getMentorCategory();
 
     const [allowed, setAllowed] = useState(false);
     useEffect(() => {
@@ -19,9 +20,9 @@ const MentorProfileView = () => {
             const isAllowed = await checkAuth(['MENTOR']);
             setAllowed(isAllowed);
 
-            if (!isAllowed) {
-                router.push('/mentor-login');
-            }
+            // if (!isAllowed) {
+            //     router.push('/mentor-login');
+            // }
         };
         checkAuthentication();
     });
@@ -80,6 +81,7 @@ const MentorProfileView = () => {
                             <LabelValuePair label="No. Handphone" value={userData.noHPMentor} />
                             <LabelValuePair label="Gender" value={userData.genderMentor} />
                             <LabelValuePair label="Pendidikan Terakhir" value={userData.pendidikanMentor} />
+                            <LabelValuePair label="Kategori" value={mentorCategory} />
                         </div>
                         <div className="position-relative">
                         {userData.image ? (

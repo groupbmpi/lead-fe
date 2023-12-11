@@ -3,10 +3,17 @@ import { useRouter } from 'next/router';
 import { useRegistration } from '@/contexts/RegistrationContext';
 import NavbarMentor from '@/components/Navbar/NavbarMentor';
 import Head from 'next/head';
-import { getUserName, getEmail, checkAuth } from '@/utils/auth';
+import { getUserName, getEmail, getMentorCategory, checkAuth } from '@/utils/auth';
 
 interface UserData {
-    image: string | null; 
+    name: string;
+    email: string;
+    category: string;
+    birthdate: string;
+    gender: string;
+    phone_number: string;
+    current_workplace: string;
+    url_picture: string; 
 }
 
 const MentorProfile: React.FC = () => {
@@ -16,6 +23,7 @@ const MentorProfile: React.FC = () => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const email = getEmail();
     const userName = getUserName();
+    const mentorCategory = getMentorCategory();
 
     const [allowed, setAllowed] = useState(false);
     useEffect(() => {
@@ -23,13 +31,33 @@ const MentorProfile: React.FC = () => {
             const isAllowed = await checkAuth(['MENTOR']);
             setAllowed(isAllowed);
 
-            if (!isAllowed) {
-                router.push('/mentor-login');
-            }
+            // if (!isAllowed) {
+            //     router.push('/mentor-login');
+            // }
         };
         checkAuthentication();
     });
 
+    useEffect(() => {
+        const fetchMentorData = async () => {
+            try {
+                const response = await fetch(`/api/v1/mentor?email=${email}`);
+                if (response.ok) {
+                    const res = await response.json();
+                    const mentorData = (res.data);
+                    // Assuming the mentor data structure matches the userData structure
+                    setUserData(prevUserData => ({
+                        ...prevUserData,
+                        ...mentorData, // Update the state with mentor data
+                    }));
+                }
+            } catch (error) {
+                console.error('Error fetching mentor data:', error);
+            }
+        };
+    
+        fetchMentorData();
+    }, [email, setUserData]);
     
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file: File | null = e.target.files ? e.target.files[0] : null;
@@ -80,9 +108,9 @@ const MentorProfile: React.FC = () => {
                         </Head>
                         <h1>Profil Mentor</h1>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="emailMentor" className="form-label">Email</label>
+                            <label htmlFor="email" className="form-label">Email</label>
                             <div className="col-sm-10">
-                                <input type="text" readOnly className="form-control-plaintext" id="emailMentor" value={email}/> 
+                                <input type="text" onChange={(e) => setUserData({ ...userData, email: e.target.value })} className="form-control-plaintext" name="email" value={userData.email}/> 
                             </div>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
@@ -125,10 +153,10 @@ const MentorProfile: React.FC = () => {
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="kategoriMentor" className="form-label">Kategori</label>
-                            <select value={userData.kategoriMentor} onChange={(e) => setUserData({ ...userData, kategoriMentor: e.target.value })} className="form-select" name="kategoriMentor" required>
+                            <select value={mentorCategory} onChange={(e) => setUserData({ ...userData, kategoriMentor: e.target.value })} className="form-select" name="kategoriMentor" required>
                                 <option disabled selected>Pilih</option>
-                                <option value="mentorCluster">Mentor Cluster</option>
-                                <option value="mentorDesainProgram">Mentor Desain Program</option>
+                                <option value="mentorCluster">Cluster</option>
+                                <option value="mentorDesainProgram">Desain Program</option>
                             </select>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
