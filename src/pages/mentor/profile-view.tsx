@@ -75,11 +75,11 @@ const MentorProfileView = () => {
                     <Head>Profil</Head>
                     <div className="d-flex justify-content-between align-items-start">
                         <div className="div className=d-flex flex-column gap-3 align-items-start" style={{ width: '20%', marginTop: '30px'}}>
+                            <LabelValuePair label="Email" value={email} />
                             <LabelValuePair label="Tanggal Lahir" value={userData.tanggalLahirMentor} />
                             <LabelValuePair label="No. Handphone" value={userData.noHPMentor} />
                             <LabelValuePair label="Gender" value={userData.genderMentor} />
                             <LabelValuePair label="Pendidikan Terakhir" value={userData.pendidikanMentor} />
-                            <LabelValuePair label="Instansi" value={userData.instansiMentor} />
                         </div>
                         <div className="position-relative">
                         {userData.image ? (
@@ -101,7 +101,7 @@ const MentorProfileView = () => {
                             <p>No image uploaded yet</p>
                         )}
                         <h5 style={{ textAlign: 'center', padding: '10px' }}><b>{userName}</b></h5>
-                        <p style={{ textAlign: 'center' }}>{email}</p>
+                        <p style={{ textAlign: 'center' }}>{userData.instansiMentor}</p>
                         </div>
                     </div>
                 </div>
