@@ -8,6 +8,7 @@ import { useAsyncList } from "@react-stately/data";
 import React from "react";
 import Link from "next/link";
 import styles from '@/styles/mentor-dashboard.module.css';
+import InformationBanner from './../../components/InformationBanner';
 
 interface ParticipantData {
   instance_id: number;
@@ -136,6 +137,7 @@ const MentorDashboard = () => {
         <title>LEAD - Dashboard Mentor</title>
       </Head>
       {allowed && <NavbarMentor />}
+      <InformationBanner />
       <div className="d-flex flex-column container-fluid p-4">
         <h1 className="mb-3">Data Pendaftar</h1>
         <Table sortDescriptor={list.sortDescriptor}
