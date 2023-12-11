@@ -2,7 +2,9 @@ import NavbarGuest from '@/components/Navbar/NavbarGuest'
 import { redirectLoggedInUser } from '@/utils/auth';
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { Alert } from 'react-bootstrap'
+import { Alert, Button, Modal } from 'react-bootstrap'
+
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function ParticipantSetPassword() {
     useEffect(() => {
@@ -13,6 +15,8 @@ export default function ParticipantSetPassword() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [show, setShow] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState('');
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -46,11 +50,55 @@ export default function ParticipantSetPassword() {
                 setShow(true)
                 return;
             }
-            // create password
+            try {
+                const response = await fetch(`${backendUrl}/api/v1/participant?email=${email}`);
+
+                if (response.ok) {
+                    const res = await response.json();
+                    const participantId = res.data.participant_id;
+                    try {
+                        const response = await fetch(`${backendUrl}/api/v1/participant/${participantId}/password/add`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ password }),
+                        });
+                        if (response.ok) {
+                            const res = await response.json();
+                            setEmail('');
+                            setPassword('');
+                            setConfirmPassword('');
+                            setModalContent(res.message);
+                            setShowModal(true);
+                        } else {
+                            const res = await response.json();
+                            setModalContent(res.message);
+                            setShowModal(true);
+                        }
+
+                    } catch (error) {
+                        setModalContent("Unknown Error");
+                        setShowModal(true);
+                    }
+                } else {
+                    const res = await response.json();
+                    setModalContent(res.message);
+                    setShowModal(true);
+                }
+            } catch (error) {
+                setModalContent("Unknown Error");
+                setShowModal(true);
+            }
 
         } catch (error) {
-            console.error('Error:', error);
+            setModalContent("Unknown Error");
+            setShowModal(true);
         }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
 
     return (
@@ -68,9 +116,9 @@ export default function ParticipantSetPassword() {
                             <label className="form-label">Email Peserta</label>
                             <input type="email" className="form-control mb-3" name="email" value={email} onChange={handleChange} required />
                             <label className="form-label">Kata Sandi</label>
-                            <input type="password" className="form-control mb-3" name="password" value={password} onChange={handleChange} required/>
+                            <input type="password" className="form-control mb-3" name="password" value={password} onChange={handleChange} required />
                             <label className="form-label">Ulangi Kata Sandi</label>
-                            <input type="password" className="form-control" name="confirmPassword" value={confirmPassword} onChange={handleChange} required/>
+                            <input type="password" className="form-control" name="confirmPassword" value={confirmPassword} onChange={handleChange} required />
                             <div className="form-text mb-4">
                                 Panjang kata sandi minimal 8 karakter!
                             </div>
@@ -81,6 +129,25 @@ export default function ParticipantSetPassword() {
                     </form>
                 </div>
             </div>
+            <Modal show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Buat Kata Sandi</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {modalContent ? (
+                        <>
+                            <p>{modalContent}</p>
+                        </>
+                    ) : (
+                        <p>Unknown Error</p>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }
