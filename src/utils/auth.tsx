@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import router from 'next/router';
 
 interface DecodedToken {
-    id: number | string;
+    id: number;
     role: string;
     name: string;
     iat: number;
@@ -25,7 +25,7 @@ export const decodeToken = (token: string | null): DecodedToken | null => {
     }
 };
 
-export const checkAuth = (requiredRoles: string[]): boolean => {
+export const checkAuth = async (requiredRoles: string[]): Promise<boolean> => {
     const token = Cookies.get('token');
     if (!token) {
         return false;
@@ -72,6 +72,20 @@ export const getRole = (): string => {
     }
 }
 
+export const getId = (): number => {
+    const token = Cookies.get('token');
+    if (!token) {
+        return 0;
+    }
+    const decodedToken = decodeToken(token);
+    if (decodedToken) {
+        return decodedToken.id;
+    } else {
+        Cookies.remove('token');
+        return 0;
+    }
+}
+
 export const getMentorCategory = (): string => {
     const token = Cookies.get('token');
     if (!token) {
@@ -107,9 +121,9 @@ export const handleLogout = async () => {
     }
 };
 
-export const redirectLoggedInUser = () => {
+export const redirectLoggedInUser = async () => {
     const loggedIn = checkAuth(['MENTOR', 'ADMIN', 'PARTICIPANT', 'SUPERADMIN']);
-    if (loggedIn) {
+    if (await loggedIn) {
         const role = getRole();
         if (role === 'MENTOR') {
             router.push('/mentor/dashboard')
