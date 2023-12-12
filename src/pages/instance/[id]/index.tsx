@@ -32,36 +32,57 @@ const Instance = () => {
     const [instance, setInstance] = useState<Instance | null>(null);
     const [allowed, setAllowed] = useState(false);
     const [error, setError] = useState(null);
-    const userName = getUserName();
-    console.log(userName);
+    const [userInstanceId, setUserInstanceId] = useState<number>();
     
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-    // useEffect(() => {
-    //     const checkAuthentication = async () => {
-    //       const isAllowed = await checkAuth(['PARTICIPANT']);
-    //       setAllowed(isAllowed);
+    useEffect(() => {
+        const checkAuthentication = async () => {
+          const isAllowed = await checkAuth(['PARTICIPANT']);
+          setAllowed(isAllowed);
     
-    //       if (!isAllowed) {
-    //         router.push('/participant-login');
-    //       }
-    //     };
-    //     checkAuthentication();
-    // });
+          if (!isAllowed) {
+            router.push('/participant-login');
+          }
+        };
+        checkAuthentication();
+    });
     
-    const getParticipant = async (userName: string) => {
+    const getParticipant = async () => {
         try {
-            const response = await fetch(`${backendUrl}/api/v1/participant?name=${userName}`);
-            const participantData = await response.json();
-            const participant = participantData?.data;
+            const response = await fetch(`${backendUrl}/api/v1/me`, {
+                credentials: 'include',
+            });
+            const res = await response.json();
+            console.log(res);
+            const userEmail = res.data.email;
+            console.log(userEmail);
 
-            if (!participant) {
+            if (!userEmail) {
                 console.error('Participant not found');
                 return null;
             }
-
-            console.log(participant.instance_id);
-            return participant.instance_id;
+            try {
+                const response = await fetch(`${backendUrl}/api/v1/participant?email=${userEmail}`, {
+                    credentials: 'include',
+                });
+                const participantData = await response.json();
+                console.log(participantData);
+                const participant = participantData?.data;
+                console.log(participant);
+    
+                if (!participant) {
+                    console.error('Participant not found');
+                    return null;
+                }
+    
+                console.log(participant.instance_id);
+                setUserInstanceId(participant.instance_id);
+                return participant.instance_id;
+            } catch (error) {
+                console.error('Error fetching participant data:', error);
+                return null;
+            }
         } catch (error) {
             console.error('Error fetching participant data:', error);
             return null;
@@ -73,15 +94,16 @@ const Instance = () => {
         try {
             const response = await fetch(`${backendUrl}/api/v1/instance/${id}`);
             const res = await response.json();
-            console.log(res.data);
             setInstance(res.data);
         } catch (error) {
             console.error('Error fetching instance data:', error);
         }
     }
 
-    useEffect(() => {
+    useEffect( () => {
+        if (!id) return;
         fetchInstance();
+        getParticipant();
     }, [id]);
 
 
@@ -106,17 +128,18 @@ const Instance = () => {
 
     if (instance) {
         // // Check if logged-in participant's instance_id matches the instance being viewed
-        // const loggedInParticipantInstanceID = await getParticipant(userName);
 
         // // Disable edit functionality if the logged-in participant doesn't match the instance being viewed
-        // const canEdit = loggedInParticipantInstanceID === instance.instance_id;
+        const canEdit = userInstanceId === instance.instance_id;
 
         return (
             <>
+                <Head>
+                    <title>LEAD - View Instance</title>
+                </Head>
                 {/* <NavbarParticipant /> */}
                 <div className="d-flex flex-column min-vh-100">
                     <div className="container mt-3 mb-3">
-                        <Head>View Instance</Head>
                         <h1>Instance Details</h1>
                         <hr />
                         {instance && (
@@ -133,20 +156,19 @@ const Instance = () => {
                             <LabelValuePair label="Website" value={instance.social_website} />
                             <LabelValuePair label="Tiktok" value={instance.social_tiktok} />
                             <LabelValuePair label="Youtube" value={instance.social_youtube} />
-                            {/* {canEdit ? (
+                            {canEdit && userInstanceId ? (
                                 <button
                                     className="btn btn-primary"
                                     onClick={() => router.push(`/instance/${id}/edit`)}
                                 >
-                                    Edit
+                                    Ubah
                                 </button>
                             ) : (
                                 <p>Anda tidak memiliki izin untuk mengedit instance ini.</p>
-                            )} */}
+                            )}
                             </div>
                         )}
                     </div>
-                    <button className="btn btn-primary" onClick={() => router.push(`/instance/${id}/edit`)}>Edit</button>
                 </div>
             </>
         );
