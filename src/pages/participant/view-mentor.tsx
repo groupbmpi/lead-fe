@@ -1,5 +1,7 @@
 import NavbarParticipant from '@/components/Navbar/NavbarParticipant';
+import { checkAuth } from '@/utils/auth';
 import Head from 'next/head';
+import router from 'next/router';
 import React, { useState, useEffect } from 'react';
 
 interface Mentor {
@@ -17,6 +19,7 @@ interface Mentor {
 
 const MentorListPage = () => {
     const [mentors, setMentors] = useState<Mentor[]>([]);
+    const [allowed, setAllowed] = useState(false);
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     type LabelValuePairProps = {
@@ -24,6 +27,18 @@ const MentorListPage = () => {
         value: string;
     };
 
+    useEffect(() => {
+        const checkAuthentication = async () => {
+          const isAllowed = await checkAuth(['PARTICIPANT']);
+          setAllowed(isAllowed);
+    
+          if (!isAllowed) {
+            router.push('/participant-login');
+          }
+        };
+        checkAuthentication();
+    });
+    
     useEffect(() => {
         const fetchMentors = async () => {
             try {
@@ -58,7 +73,7 @@ const MentorListPage = () => {
             <Head>
                 <title>LEAD - Lihat Daftar Mentor</title>
             </Head>
-            <NavbarParticipant />
+            {allowed && <NavbarParticipant />}
             <div className="mentor-list-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
                 <div className="mentor-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <h1 style={{marginBottom: '20px' }}>Mentor List</h1>

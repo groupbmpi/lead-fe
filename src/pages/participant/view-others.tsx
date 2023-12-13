@@ -1,5 +1,7 @@
 import NavbarParticipant from '@/components/Navbar/NavbarParticipant';
+import { checkAuth } from '@/utils/auth';
 import Head from 'next/head';
+import router from 'next/router';
 import React, { useState, useEffect } from 'react';
 
 interface Participant {
@@ -16,12 +18,25 @@ interface Participant {
 
 const ParticipantListPage = () => {
     const [participant, setParticipants] = useState<Participant[]>([]);
+    const [allowed, setAllowed] = useState(false);
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     type LabelValuePairProps = {
         label: string;
         value: string;
     };
+
+    useEffect(() => {
+        const checkAuthentication = async () => {
+          const isAllowed = await checkAuth(['PARTICIPANT']);
+          setAllowed(isAllowed);
+    
+          if (!isAllowed) {
+            router.push('/participant-login');
+          }
+        };
+        checkAuthentication();
+    });
 
     useEffect(() => {
         const fetchParticipant = async () => {
@@ -75,7 +90,7 @@ const ParticipantListPage = () => {
             <Head>
                 <title>LEAD - Lihat Daftar Peserta</title>
             </Head>
-            <NavbarParticipant />
+            {allowed && <NavbarParticipant />}
             <div className="participant-list-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
                 <div className="participant-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <h1 style={{marginBottom: '20px' }}>Participant List</h1>
