@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import router from 'next/router';
 
 interface DecodedToken {
-    id: number | string;
+    id: number;
     role: string;
     email: string;
     name: string;
@@ -83,6 +83,20 @@ export const getRole = (): string => {
     } else {
         Cookies.remove('token');
         return 'User';
+    }
+}
+
+export const getId = (): number => {
+    const token = Cookies.get('token');
+    if (!token) {
+        return 0;
+    }
+    const decodedToken = decodeToken(token);
+    if (decodedToken) {
+        return decodedToken.id;
+    } else {
+        Cookies.remove('token');
+        return 0;
     }
 }
 
