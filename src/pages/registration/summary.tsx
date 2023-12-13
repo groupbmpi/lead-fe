@@ -43,8 +43,8 @@ const SummaryRegistration = () => {
 
   const LabelValuePairInstance = ({ label, value }: LabelValuePairProps) => (
     <p style={{ display: 'flex', alignItems: 'center' }}>
-      <span style={{ flex: '0 0 24.5%' }}>{label}</span>
-      <span style={{ flex: '0 0 24.5%' }}>: {value}</span>
+      <span style={{ flex: '0 0 40%' }}>{label}</span>
+      <span style={{ flex: '0 0 50%' }}>: {value}</span>
     </p>
   ); 
 
@@ -65,10 +65,10 @@ const SummaryRegistration = () => {
         <LabelValuePair label="Jurusan Pendidikan Terakhir Peserta" value={userData.jurusanPeserta1} />
         <LabelValuePair label="Fokus Isu Peserta" value={userData.fokusIsuPeserta1} />
         <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta1} />
-        {/* <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta1} />
+        <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta1} />
         <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta1} />
-        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta1} /> */}
-        <Link className="btn btn-primary" href="/registration/participant-1">Ubah</Link>
+        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta1} />
+        <Link className="btn btn-secondary" href="/registration/participant-1">Ubah</Link>
       </div>
     );
   };
@@ -83,26 +83,27 @@ const SummaryRegistration = () => {
         <LabelValuePair label="Jurusan Pendidikan Terakhir Peserta" value={userData.jurusanPeserta2} />
         <LabelValuePair label="Fokus Isu Peserta" value={userData.fokusIsuPeserta2} />
         <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta2} />
-        {/* <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta2} />
+        <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta2} />
         <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta2} />
-        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta2} /> */}
-        <Link className="btn btn-primary" href="/registration/participant-2">Ubah</Link>
+        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta2} />
+        <Link className="btn btn-secondary" href="/registration/participant-2">Ubah</Link>
       </div>
     );
   };
 
-  const fullAddress = `${userData.alamatKantor}, ${userData.kotaKantor}, ${userData.provinsiKantor}`;
+  const fullAddress = `${userData.address_street}, ${userData.address_village}, ${userData.address_district}, ${userData.address_regency}, ${userData.address_province}, ${userData.address_postal_code}`;
 
   console.log(userData)
   return (
     <>
       <Head>
-        <title>Ringkasan Registrasi</title>
+        <title>LEAD - Ringkasan Pendaftaran</title>
       </Head>
-      <div className="container d-flex flex-column gap-2 align-items-left justify-content-left vh-90">
+      <div className="container d-flex flex-column gap-2 align-items-left justify-content-left vh-90" style={{marginTop: '20px', marginBottom: '20px' }}>
         <h2>Ringkasan</h2>
+        <hr />
         <h3>Instansi</h3>
-        <h5>Profil</h5>
+        <hr />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <LabelValuePairInstance label="Nama Instansi" value={userData.namaInstansi} />
           <LabelValuePairInstance label="Email Instansi" value={userData.emailInstansi} />
@@ -111,14 +112,28 @@ const SummaryRegistration = () => {
           <LabelValuePairInstance label="Jenis Cluster" value={userData.jenisCluster} />
           <LabelValuePairInstance label="Fokus Isu" value={userData.fokusIsu} />
           <LabelValuePairInstance label="Alamat Lengkap" value={fullAddress} />
+          <LabelValuePairInstance label="Cakupan Jangkauan Program" value={userData.cakupanInstansi} />
+          <LabelValuePairInstance label="Jumlah Penerima Manfaat" value={userData.jumlahPenerimaManfaat} />
           <LabelValuePairInstance label="Instagram Instansi" value={userData.instagramInstansi} />
           <LabelValuePairInstance label="Website Instansi" value={userData.websiteInstansi} />
           <LabelValuePairInstance label="Tiktok Instansi" value={userData.tiktokInstansi} />
           <LabelValuePairInstance label="Youtube Instansi" value={userData.youtubeInstansi} />
-          <LabelValuePairInstance label="Jumlah Penerima Manfaat" value={userData.jumlahPenerimaManfaat} />
-          <Link className="btn btn-primary" href="/registration/instance">Ubah</Link>
+          <LabelValuePairInstance label="Company Profile" value={userData.url_company_profile} />
+          <LabelValuePairInstance label="Proposal Program" value={userData.url_program_proposal} />
+          <LabelValuePairInstance label="Sumber Informasi LEAD Indonesia" value={userData.information_source} />
+          <LabelValuePairInstance label="Pelatihan/Pengetahuan tentang Desain Program" value={userData.desain_program_training} />
+          <LabelValuePairInstance label="Yang Diketahui tentang Desain Program" value={userData.desain_program_knowledge} />
+          <LabelValuePairInstance label="Pelatihan/Pengetahuan tentang Sustainability" value={userData.sustainability_training} />
+          <LabelValuePairInstance label="Yang Diketahui tentang Sustainability" value={userData.sustainability_knowledge} />
+          <LabelValuePairInstance label="Pelatihan/Pengetahuan tentang Social Report" value={userData.social_report_training} />
+          <LabelValuePairInstance label="Yang Diketahui tentang Social Report" value={userData.social_report_knowledge} />
+          <LabelValuePairInstance label="Program Report" value={userData.url_program_report} />
+          <LabelValuePairInstance label="Ekspektasi terhadap LEAD Indonesia" value={userData.expectation} />
+          <LabelValuePairInstance label="Pertanyaan untuk LEAD Indonesia" value={userData.other_inquiries} />
+          <Link className="btn btn-secondary" href="/registration/instance">Ubah</Link>
         </div>
-        <h3>Peserta</h3>
+        <h3 style={{marginTop: '20px'}}>Peserta</h3>
+        <hr />
         <div className="row">
           <div className="col">
             <h5>Peserta I</h5>
