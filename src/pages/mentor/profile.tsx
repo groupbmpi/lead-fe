@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useRegistration } from '@/contexts/RegistrationContext';
 import NavbarMentor from '@/components/Navbar/NavbarMentor';
 import Head from 'next/head';
-import { getUserName, getEmail, getMentorCategory, checkAuth } from '@/utils/auth';
+import { getUserName, getEmail, getMentorCategory, getId, checkAuth } from '@/utils/auth';
 
 interface UserData {
     name: string;
@@ -18,12 +18,15 @@ interface UserData {
 
 const MentorProfile: React.FC = () => {
     const router = useRouter();
+    const id = getId();
     const { userData, setUserData } = useRegistration();
     const [formData, setFormData] = useState({ ...userData });
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [imageURL, setImageURL] = useState<string>('');
     const email = getEmail();
     const userName = getUserName();
     const mentorCategory = getMentorCategory();
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     const [allowed, setAllowed] = useState(false);
     useEffect(() => {
@@ -41,7 +44,9 @@ const MentorProfile: React.FC = () => {
     useEffect(() => {
         const fetchMentorData = async () => {
             try {
-                const response = await fetch(`/api/v1/mentor?email=${email}`);
+                const response = await fetch(`${backendUrl}/api/v1/mentor?id=${id}`, {
+                    credentials: 'include',
+                });
                 if (response.ok) {
                     const res = await response.json();
                     const mentorData = (res.data);
@@ -59,6 +64,22 @@ const MentorProfile: React.FC = () => {
         fetchMentorData();
     }, [email, setUserData]);
     
+    // const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //     const file: File | null = e.target.files ? e.target.files[0] : null;
+    //     setSelectedImage(file);
+
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onload = (event) => {
+    //             setFormData((prevData) => ({
+    //                 ...prevData,
+    //                 image: event.target?.result as string,
+    //             }));
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
+
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file: File | null = e.target.files ? e.target.files[0] : null;
         setSelectedImage(file);
@@ -70,6 +91,7 @@ const MentorProfile: React.FC = () => {
                     ...prevData,
                     image: event.target?.result as string,
                 }));
+                setImageURL(event.target?.result as string);
             };
             reader.readAsDataURL(file);
         }
@@ -79,7 +101,7 @@ const MentorProfile: React.FC = () => {
         console.log(selectedImage);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const mentorProfileForm = new FormData(e.currentTarget);
@@ -91,8 +113,32 @@ const MentorProfile: React.FC = () => {
             ...prevUserData,
             ...mentorProfileData,
             image: formData.image,
-        }));
-        router.push('/mentor/profile-view');
+        })); 
+
+        const userDataPayload = {
+            email: userData.email,
+            category: userData.kategoriMentor,
+            birthdate: userData.tanggalLahirMentor,
+            gender: userData.genderMentor,
+            phone_number: userData.noHPMentor,
+            education_background: userData.pendidikanMentor,
+            current_workplace: userData.instansiMentor,
+            url_picture: imageURL,
+            role: "MENTOR",
+        }
+
+        const response = await fetch(`${backendUrl}/api/v1/mentor/${id}`, {
+            credentials: 'include',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userDataPayload),
+        });
+
+        if (response.ok) {
+            router.push(`/mentor/profile-view`);
+        }
     };
 
     console.log(userData)
@@ -159,10 +205,14 @@ const MentorProfile: React.FC = () => {
                                 <option value="mentorDesainProgram">Desain Program</option>
                             </select>
                         </div>
-                        <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="fotoMentor" className="form-label">Upload Foto</label>
-                            <input type="file" accept=".jpg, .png, .jpeg" onChange={handleImageChange} required/>
-                        </div>
+                        {imageURL && (
+                            <div className="d-flex flex-column align-items-start mb-3">
+                                <label htmlFor="fotoMentor" className="form-label">
+                                    Preview Image
+                                </label>
+                                <img src={imageURL} alt="Uploaded" />
+                            </div>
+                        )}
                         <button type="submit" className="btn btn-primary" onClick={handleUpload}>
                             Simpan
                         </button>
