@@ -102,8 +102,26 @@ const Home = () => {
                             <input value={userData.emailInstansi} onChange={(e) => setUserData({ ...userData, emailInstansi: e.target.value })} type="email" className="form-control" name="emailInstansi" placeholder="cth: a@gmail.com" required />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="tanggalBerdiri" className="form-label">Bulan/Tahun Instansi</label>
-                            <input value={userData.tanggalBerdiri} onChange={(e) => setUserData({ ...userData, tanggalBerdiri: e.target.value })} type="month" className="form-control" name="tanggalBerdiri" required />
+                            <label htmlFor="bulanBerdiri" className="form-label">Bulan Berdiri Instansi</label>
+                            <select value={userData.bulanBerdiri} onChange={(e) => setUserData({ ...userData, bulanBerdiri: e.target.value })} className="form-select" name="bulanBerdiri" required >
+                                <option disabled selected>Pilih</option>
+                                <option value="Januari">Januari</option>
+                                <option value="Februari">Februari</option>
+                                <option value="Maret">Maret</option>
+                                <option value="April">April</option>
+                                <option value="Mei">Mei</option>
+                                <option value="Juni">Juni</option>
+                                <option value="Juli">Juli</option>
+                                <option value="Agustus">Agustus</option>
+                                <option value="September">September</option>
+                                <option value="Oktober">Oktober</option>
+                                <option value="November">November</option>
+                                <option value="Desember">Desember</option>
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="tahunBerdiri" className="form-label">Tahun Berdirinya Instansi</label>
+                            <input value={userData.tahunBerdiri} onChange={(e) => setUserData({ ...userData, tahunBerdiri: e.target.value })} type="text" className="form-control" name="tahunBerdiri" required />
                         </div>
 
                         <div className="mb-3">

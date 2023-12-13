@@ -35,11 +35,118 @@ const SummaryRegistration = () => {
     setConfirmedConcept(e.target.checked);
   };
 
-  const handleButtonClick = () => {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const handleButtonClick = async () => {
     if (confirmedData && confirmedConcept) {
-      window.location.href = '/'; 
-    }
-  };
+      try {
+        const participants = [
+          {
+            participant_number: 1,
+            name: userData.namaPeserta1,
+            position: userData.posisiPeserta1,
+            latest_education: userData.pendidikanPeserta1,
+            education_background: userData.jurusanPeserta1,
+            focus: userData.fokusIsuPeserta1,
+            whatsapp_number: userData.whatsappPeserta1,
+            email: userData.emailPeserta1,
+            joining_reason: userData.alasanPeserta1,
+            url_id_card: userData.ktpPeserta1,
+            url_cv: userData.cvPeserta1,
+            confirmation_1: userData.miniTrainingPeserta1,
+            confirmation_2: userData.initMentoringPeserta1,
+            confirmation_3: userData.pendampinganPeserta1,
+          },
+          {
+            participant_number: 2,
+            name: userData.namaPeserta2,
+            position: userData.posisiPeserta2,
+            latest_education: userData.pendidikanPeserta2,
+            education_background: userData.jurusanPeserta2,
+            focus: userData.fokusIsuPeserta2,
+            whatsapp_number: userData.whatsappPeserta2,
+            email: userData.emailPeserta2,
+            joining_reason: userData.alasanPeserta2,
+            url_id_card: userData.ktpPeserta2,
+            url_cv: userData.cvPeserta2,
+            confirmation_1: userData.miniTrainingPeserta2,
+            confirmation_2: userData.initMentoringPeserta2,
+            confirmation_3: userData.pendampinganPeserta2,
+          },
+        ];
+
+        const userDataPayload = {
+          name: userData.namaInstansi,
+          type: userData.jenisInstansi,
+          email: userData.emailInstansi,
+          sector: userData.jenisCluster,
+          focus: userData.fokusIsu,
+          established_month: userData.bulanBerdiri,
+          established_year: userData.tahunBerdiri,
+          area: userData.cakupanInstansi,
+          total_beneficiaries: userData.jumlahPenerimaManfaat,
+          description: userData.gambaranInstansi,
+          url_company_profile: userData.url_company_profile,
+          url_program_proposal: userData.url_program_proposal,
+          status: "TIDAK LOLOS",
+          stable_fund_source: "",
+          information_source: userData.information_source,
+          desain_program_training: userData.desain_program_training,
+          desain_program_knowledge: userData.desain_program_knowledge,
+          sustainability_training: userData.sustainability_training,
+          sustainability_knowledge: userData.sustainability_knowledge,
+          social_report_training: userData.social_report_training,
+          social_report_knowledge: userData.social_report_knowledge,
+          url_program_report: userData.url_program_report,
+          expectation: userData.expectation,
+          other_inquiries: userData.other_inquiries,
+          social_instagram: userData.instagramInstansi,
+          social_website: userData.websiteInstansi,
+          social_tiktok: userData.tiktokInstansi,
+          social_youtube: userData.youtubeInstansi,
+          address_street: userData.address_street,
+          address_village: userData.address_village,
+          address_district: userData.address_district,
+          address_regency: userData.address_regency,
+          address_province: userData.address_province,
+          address_postal_code: userData.address_postal_code,
+          instance_participants: participants.map((participant) => ({
+            participant_number: participant.participant_number,
+            name: participant.name,
+            position: participant.position,
+            latest_education: participant.latest_education,
+            education_background: participant.education_background,
+            focus: participant.focus,
+            whatsapp_number: participant.whatsapp_number,
+            email: participant.email,
+            joining_reason: participant.joining_reason,
+            url_id_card: participant.url_id_card,
+            url_cv: participant.url_cv,
+            confirmation_1: participant.confirmation_1,
+            confirmation_2: participant.confirmation_2,
+            confirmation_3: participant.confirmation_3,
+          })),
+        };
+
+        console.log(userDataPayload)
+
+        const response = await fetch(`${backendUrl}/api/v1/register`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userDataPayload),
+        });
+
+        if (response.ok) {
+            router.push(`/`);
+        }
+
+        } catch (error) {
+        console.error('Error updating instance:', error);
+        }
+      }
+    };
 
   const LabelValuePairInstance = ({ label, value }: LabelValuePairProps) => (
     <p style={{ display: 'flex', alignItems: 'center' }}>
@@ -93,7 +200,6 @@ const SummaryRegistration = () => {
 
   const fullAddress = `${userData.address_street}, ${userData.address_village}, ${userData.address_district}, ${userData.address_regency}, ${userData.address_province}, ${userData.address_postal_code}`;
 
-  console.log(userData)
   return (
     <>
       <Head>
@@ -107,7 +213,8 @@ const SummaryRegistration = () => {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <LabelValuePairInstance label="Nama Instansi" value={userData.namaInstansi} />
           <LabelValuePairInstance label="Email Instansi" value={userData.emailInstansi} />
-          <LabelValuePairInstance label="Tahun/Bulan Berdiri Instansi" value={userData.tanggalBerdiri} />
+          <LabelValuePairInstance label="Bulan Berdiri Instansi" value={userData.bulanBerdiri} />
+          <LabelValuePairInstance label="Tahun Berdiri Instansi" value={userData.tahunBerdiri} />
           <LabelValuePairInstance label="Jenis Instansi" value={userData.jenisInstansi} />
           <LabelValuePairInstance label="Jenis Cluster" value={userData.jenisCluster} />
           <LabelValuePairInstance label="Fokus Isu" value={userData.fokusIsu} />
