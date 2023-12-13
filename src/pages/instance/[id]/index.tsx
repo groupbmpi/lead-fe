@@ -8,22 +8,26 @@ import { checkAuth, getEmail, getUserName, } from "@/utils/auth";
 interface Instance {
     instance_id: number;
     name: string;
+    description: string;
     email: string;
     established_month: string;
     established_year: string;
     type: string;
     sector: string;
     focus: string;
+    area: string;
     total_beneficiaries: string;
     social_instagram: string;
     social_website: string;
     social_tiktok: string;
     social_youtube: string;
     address_street: string;
+    address_village: string;
     address_district: string;
     address_regency: string;
     address_province: string;
     address_postal_code: string;
+    stable_fund_source: string;
 }
 
 const Instance = () => {
@@ -94,6 +98,7 @@ const Instance = () => {
         try {
             const response = await fetch(`${backendUrl}/api/v1/instance/${id}`);
             const res = await response.json();
+            console.log(res.data);
             setInstance(res.data);
         } catch (error) {
             console.error('Error fetching instance data:', error);
@@ -123,13 +128,10 @@ const Instance = () => {
         return <p>Error: {error}</p>;
     }
 
-    const fullAddress = `${instance?.address_street}, ${instance?.address_district}, ${instance?.address_regency}, ${instance?.address_province}, ${instance?.address_postal_code}`;
+    const fullAddress = `${instance?.address_street}, ${instance?.address_village}, ${instance?.address_district}, ${instance?.address_regency}, ${instance?.address_province}, ${instance?.address_postal_code}`;
     const establishedDate = `${instance?.established_month}, ${instance?.established_year}`;
 
     if (instance) {
-        // // Check if logged-in participant's instance_id matches the instance being viewed
-
-        // // Disable edit functionality if the logged-in participant doesn't match the instance being viewed
         const canEdit = userInstanceId === instance.instance_id;
 
         return (
@@ -145,17 +147,20 @@ const Instance = () => {
                         {instance && (
                             <div>
                             <h3>{instance.name}</h3>
+                            <p>{instance.description}</p>
                             <LabelValuePair label="Email" value={instance.email} />
                             <LabelValuePair label="Alamat" value={fullAddress} />
                             <LabelValuePair label="Tanggal Berdiri" value={establishedDate} />
                             <LabelValuePair label="Jenis Instansi" value={instance.type} />
                             <LabelValuePair label="Jenis Cluster" value={instance.sector} />
                             <LabelValuePair label="Fokus Isu" value={instance.focus} />
+                            <LabelValuePair label="Area Tercakup" value={instance.area} />
                             <LabelValuePair label="Total Penerima Manfaat" value={instance.total_beneficiaries} />
                             <LabelValuePair label="Instagram" value={instance.social_instagram} />
                             <LabelValuePair label="Website" value={instance.social_website} />
                             <LabelValuePair label="Tiktok" value={instance.social_tiktok} />
                             <LabelValuePair label="Youtube" value={instance.social_youtube} />
+                            <LabelValuePair label="Sumber Pendanaan tetap" value={instance.stable_fund_source} />
                             {canEdit && userInstanceId ? (
                                 <button
                                     className="btn btn-primary"
