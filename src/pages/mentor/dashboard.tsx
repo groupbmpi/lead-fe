@@ -16,6 +16,7 @@ interface ParticipantData {
   email: string;
   type: string;
   status: string;
+  [column: string]: any;
 }
 
 const MentorDashboard = () => {
@@ -58,8 +59,8 @@ const MentorDashboard = () => {
     async sort({ items, sortDescriptor }) {
       return {
         items: items.sort((a: ParticipantData, b: ParticipantData) => {
-          let first = a[sortDescriptor.column];
-          let second = b[sortDescriptor.column];
+          let first = a[sortDescriptor.column as string];
+          let second = b[sortDescriptor.column as string];
           let cmp = (parseInt(first) || first) < (parseInt(second) || second) ? -1 : 1;
 
           if (sortDescriptor.direction === "descending") {

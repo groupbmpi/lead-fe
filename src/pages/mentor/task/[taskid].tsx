@@ -139,7 +139,9 @@ const MentorTaskPage = () => {
   };
 
   const handleFeedbackChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setSelectedSubmission({ ...selectedSubmission, feedback: event.target.value });
+    if (selectedSubmission?.submission_id) {
+      setSelectedSubmission({ ...selectedSubmission, feedback: event.target.value });
+    }
   };
 
   const handleSubmitFeedback = async () => {
