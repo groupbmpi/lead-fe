@@ -1,4 +1,5 @@
 import NavbarParticipant from '@/components/Navbar/NavbarParticipant';
+import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 
 interface Mentor {
@@ -32,8 +33,8 @@ const MentorListPage = () => {
 
                 if (response.ok) {
                     const res = await response.json();
-                    console.log(res.data); // Log the entire data object to check its structure
-                    setMentors(res.data?.mentors || []); // Update mentors state with the fetched data
+                    console.log(res.data); 
+                    setMentors(res.data?.mentors || []); 
                 } else {
                     console.error('Error fetching mentors:', response.status);
                 }
@@ -54,6 +55,9 @@ const MentorListPage = () => {
 
     return (
         <>
+            <Head>
+                <title>LEAD - Lihat Daftar Mentor</title>
+            </Head>
             <NavbarParticipant />
             <div className="mentor-list-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
                 <div className="mentor-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -63,13 +67,13 @@ const MentorListPage = () => {
                             <div key={mentor.mentor_id} style={{ width: '600px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff', transition: 'box-shadow 0.3s ease', display: 'flex', flexDirection: 'column' }} className="mentor-card">
                                 <h3 style={{ marginBottom: '10px' }}>{mentor.name}</h3>
                                 <LabelValuePair label="Email" value={mentor.email} />
-                                <LabelValuePair label="Kategori" value={mentor.category} />
                                 <LabelValuePair label="Tanggal Lahir" value={mentor.birthdate} />
-                                <LabelValuePair label="Gender" value={mentor.gender} />
-                                <LabelValuePair label="No. Telepon" value={mentor.phone_number} />
-                                <LabelValuePair label="Pendidikan Terakhir" value={mentor.education_background} />
                                 <LabelValuePair label="Instansi" value={mentor.current_workplace} />
                                 <LabelValuePair label="Posisi" value={mentor.position} />
+                                <LabelValuePair label="Pendidikan Terakhir" value={mentor.education_background} />
+                                <LabelValuePair label="Kategori" value={mentor.category} />
+                                <LabelValuePair label="Gender" value={mentor.gender} />
+                                <LabelValuePair label="No. Telepon" value={mentor.phone_number} />
                             </div>
                         ))}
                     </div>
