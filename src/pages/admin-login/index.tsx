@@ -46,7 +46,7 @@ export default function ParticipantLogin() {
 
             if (response.ok) {
                 const res = await response.json();
-                cookies.set('token', res.data.token, { path: '/', secure: process.env.NODE_ENV === 'production' });
+                cookies.set('token', res.message.token, { path: '/', secure: process.env.NODE_ENV === 'production' });
                 router.push('/admin/dashboard');
             } else {
                 const errorData = await response.json();
@@ -67,7 +67,7 @@ export default function ParticipantLogin() {
                 <NavbarGuest />
                 <div className="container-fluid align-items-center justify-content-center d-flex flex-column flex-grow-1">
                     <h1 className="mb-3">Login</h1>
-                    <h4 className="mb-3">Mentor</h4>
+                    <h4 className="mb-3">Admin</h4>
                     {show && <Alert className="col-sm-6 col-10" onClose={() => setShow(false)} dismissible variant="danger">{error}</Alert>}
                     <form onSubmit={handleFormSubmit} className="col-sm-6 col-10">
                         <div className="d-flex flex-column">
