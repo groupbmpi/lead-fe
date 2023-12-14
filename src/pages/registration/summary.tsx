@@ -35,9 +35,16 @@ const SummaryRegistration = () => {
     setConfirmedConcept(e.target.checked);
   };
 
-  const handleButtonClick = () => {
-    if (confirmedData && confirmedConcept) {
-      window.location.href = '/'; 
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const handleButtonClick = async () => {
+    if (confirmedData && confirmedConcept && userData.namaPeserta1) {
+      try {
+        // const response = await fetch(`${backendUrl}/api/v1/city`);
+        // const res = await response.json();
+        // setCityOptions(res.data);
+      } catch (error) {
+        // console.error('Error fetching city data:', error);
+      }
     }
   };
 
@@ -65,10 +72,10 @@ const SummaryRegistration = () => {
         <LabelValuePair label="Jurusan Pendidikan Terakhir Peserta" value={userData.jurusanPeserta1} />
         <LabelValuePair label="Fokus Isu Peserta" value={userData.fokusIsuPeserta1} />
         <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta1} />
-        <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta1} />
-        <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta1} />
-        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta1} />
-        <Link className="btn btn-secondary" href="/registration/participant-1">Ubah</Link>
+        <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta1 == '1' ? 'Ya, Saya bersedia' : 'Mungkin perlu rekan pengganti di hari tertentu'} />
+        <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta1 == '1' ? 'Ya, Saya bersedia' : 'Mungkin perlu rekan pengganti di hari tertentu'} />
+        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta1 == '1' ? 'Ya, Saya bersedia' : 'Mungkin perlu rekan pengganti di hari tertentu'} />
+        <Link className="btn btn-info text-white" href="/registration/participant-1">Ubah</Link>
       </div>
     );
   };
@@ -83,10 +90,10 @@ const SummaryRegistration = () => {
         <LabelValuePair label="Jurusan Pendidikan Terakhir Peserta" value={userData.jurusanPeserta2} />
         <LabelValuePair label="Fokus Isu Peserta" value={userData.fokusIsuPeserta2} />
         <LabelValuePair label="No Whatsapp Peserta" value={userData.whatsappPeserta2} />
-        <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta2} />
-        <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta2} />
-        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta2} />
-        <Link className="btn btn-secondary" href="/registration/participant-2">Ubah</Link>
+        <LabelValuePair label="Bersedia mengikuti Mini Training LEAD Indonesia?" value={userData.miniTrainingPeserta2 == '1' ? 'Ya, Saya bersedia' : 'Mungkin perlu rekan pengganti di hari tertentu'} />
+        <LabelValuePair label="Bersedia mengikuti Initial Training LEAD Indonesia?" value={userData.initMentoringPeserta2 == '1' ? 'Ya, Saya bersedia' : 'Mungkin perlu rekan pengganti di hari tertentu'} />
+        <LabelValuePair label="Bersedia mengikuti Pendampingan Intensif bersama Para Mentor LEAD Indonesia?" value={userData.pendampinganPeserta2 == '1' ? 'Ya, Saya bersedia' : 'Mungkin perlu rekan pengganti di hari tertentu'} />
+        <Link className="btn btn-info text-white" href="/registration/participant-2">Ubah</Link>
       </div>
     );
   };
@@ -130,7 +137,7 @@ const SummaryRegistration = () => {
           <LabelValuePairInstance label="Program Report" value={userData.url_program_report} />
           <LabelValuePairInstance label="Ekspektasi terhadap LEAD Indonesia" value={userData.expectation} />
           <LabelValuePairInstance label="Pertanyaan untuk LEAD Indonesia" value={userData.other_inquiries} />
-          <Link className="btn btn-secondary" href="/registration/instance">Ubah</Link>
+          <Link className="btn btn-info text-white" href="/registration/instance">Ubah</Link>
         </div>
         <h3 style={{marginTop: '20px'}}>Peserta</h3>
         <hr />
@@ -159,6 +166,7 @@ const SummaryRegistration = () => {
             name="confirmData"
             checked={confirmedData}
             onChange={handleConfirmationDataChange}
+            className='me-1'
           />
           <label htmlFor="confirmData">Saya konfirmasi bahwa semua informasi yang saya berikan di atas adalah akurat dan terkini</label>
         </div>
@@ -169,9 +177,10 @@ const SummaryRegistration = () => {
             name="confirmConcept"
             checked={confirmedConcept}
             onChange={handleConfirmationConceptChange}
+            className='me-1'
           />
-          <label htmlFor="confirmConcept">Saya sudah membaca dan memahami
-            <Link href="https://bit.ly/LEADBCF-2023"> Concept Note</Link>
+          <label htmlFor="confirmConcept">Saya sudah membaca dan memahami 
+            <span> <Link href="https://bit.ly/LEADBCF-2023">Concept Note</Link></span>
           </label>
         </div>
         <button className="btn btn-primary" onClick={handleButtonClick} disabled={buttonDisabled}>
