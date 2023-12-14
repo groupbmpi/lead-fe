@@ -43,10 +43,10 @@ const MentorProfile: React.FC = () => {
 
     useEffect(() => {
         const fetchMentorData = async () => {
-            try {
-                const response = await fetch(`${backendUrl}/api/v1/mentor?id=${id}`, {
-                    credentials: 'include',
-                });
+          try {
+            const response = await fetch(`${backendUrl}/api/v1/mentor?mentor_id=${id}`, {
+              credentials: 'include',
+            });
                 if (response.ok) {
                     const res = await response.json();
                     const mentorData = (res.data);
@@ -62,7 +62,7 @@ const MentorProfile: React.FC = () => {
         };
     
         fetchMentorData();
-    }, [email, setUserData]);
+    }, [id]);
     
     // const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     //     const file: File | null = e.target.files ? e.target.files[0] : null;
