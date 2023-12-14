@@ -88,8 +88,6 @@ const MentorListPage = () => {
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                                     <h3>{mentor.name}</h3>
                                 </div>
-                                <LabelValuePair label="Id" value={mentor.mentor_id} />
-                                <LabelValuePair label="Id BCF" value={mentor.mentor_id_bcf} />
                                 <LabelValuePair label="Email" value={mentor.email} />
                                 <LabelValuePair label="Tanggal Lahir" value={mentor.birthdate} />
                                 <LabelValuePair label="Gender" value={mentor.gender} />
