@@ -7,21 +7,22 @@ import React, { useEffect, useState } from 'react';
 const InformationBannerPage = () => {
     const [text, setText] = useState('');
     const [image, setImage] = useState<File | null>(null);
+    const [url_picture, setUrlPicture] = useState('');
     const [allowed, setAllowed] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-    // useEffect(() => {
-    //     const checkAuthentication = async () => {
-    //       const isAllowed = await checkAuth(['ADMIN']);
-    //       setAllowed(isAllowed);
+    useEffect(() => {
+        const checkAuthentication = async () => {
+          const isAllowed = await checkAuth(['SUPERADMIN']);
+          setAllowed(isAllowed);
     
-    //       if (!isAllowed) {
-    //         router.push('/admin-login');
-    //       }
-    //     };
-    //     checkAuthentication();
-    // });
+          if (!isAllowed) {
+            router.push('/admin-login');
+          }
+        };
+        checkAuthentication();
+    });
 
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
@@ -34,26 +35,18 @@ const InformationBannerPage = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
-        const formData = new FormData();
-        formData.append('text', text);
-        if (image) {
-            formData.append('url_image', image);
-        }
 
         try {    
-            console.log(formData);
-            const response = await fetch(`${backendUrl}/api/v1/informationBanner`, {
+            const response = await fetch(`${backendUrl}/api/v1/informationBanner/1`, {
                 credentials: 'include',
-                method: 'POST',
-                // headers: {
-                //     'Content-Type': 'application/json',
-                // },
-                body: JSON.stringify(formData),
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({text, url_picture}),
             });
     
             if (response.ok) {
-                console.log(formData)
                 setSuccessMessage('Information banner sukses dibuat!');
             } else {
                 setSuccessMessage('Information banner gagal dibuat');
@@ -70,7 +63,6 @@ const InformationBannerPage = () => {
             <Head>
                 <title>LEAD - Buat Information Banner</title>
             </Head>
-            {/* <NavbarAdmin/> */}
             {allowed && <NavbarAdmin />}
             <div className="container mt-5">
                 <h1>Buat Information Banner</h1>
@@ -83,7 +75,7 @@ const InformationBannerPage = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="image" className="form-label">Gambar (ratio 9:1):</label>
-                        <input type="file" id="image" accept="image/*" onChange={handleImageChange} className="form-control" />
+                        <input type="file" id="image" accept=".jpg, .png, .jpeg" onChange={handleImageChange} className="form-control" />
                     </div>
                     <button type="submit" className="btn btn-primary">Buat</button>
                 </form>
