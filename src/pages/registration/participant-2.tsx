@@ -38,10 +38,10 @@ export default function Home() {
     };
     return (
         <>
+            <Head>
+                <title>LEAD - Pendaftaran Peserta 2</title>
+            </Head>
             <form onSubmit={handleSubmit}>
-                <Head>
-                <title>Pendaftaran Peserta 1</title>
-                </Head>
                 <div className="container d-flex flex-column gap-2 align-items-left justify-content-left vh-90">
                     <h1>Profil Peserta 1</h1>
                     <div className="mb-3">
@@ -99,10 +99,12 @@ export default function Home() {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="ktpPeserta2" className="form-label">Unggah Kartu Tanda Penduduk (KTP)</label>
+                        <p>Pastikan tautan dapat dilihat secara publik dengan format nama dokumen <b>“KTP_Nama Lengkap_Nama Instansi”</b></p>
                         <input value={userData.ktpPeserta2} onChange={(e) => setUserData({ ...userData, ktpPeserta2: e.target.value })} type="url" className="form-control" name="ktpPeserta2" placeholder="Link Kartu Tanda Penduduk" required />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="cvPeserta2" className="form-label">Unggah Curriculum Vitae</label>
+                        <p>Pastikan tautan dapat dilihat secara publik dengan format nama dokumen <b>“CV_Nama Lengkap_Nama Instansi”</b></p>
                         <input value={userData.cvPeserta2} onChange={(e) => setUserData({ ...userData, cvPeserta2: e.target.value })} type="url" className="form-control" name="cvPeserta2" placeholder="Link Curriculum Vitae" required />
                     </div>
                     <div className="mb-3">
