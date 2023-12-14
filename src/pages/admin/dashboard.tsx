@@ -67,12 +67,24 @@ const AdminDashboard = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, selectedData]);
 
-  const chartDatas = {
-    labels: [''],
+  type ChartData = {
+    labels: string[];
+    datasets: ChartDataset[];
+  };
+  
+  type ChartDataset = {
+    label: string;
+    data: string[];
+    backgroundColor: string[];
+    borderColor: string[];
+    borderWidth: number;
+  };
+  const chartDatas: ChartData = {
+    labels: [],
     datasets: [
       {
         label: "Total",
-        data: [''],
+        data: [],
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',
           'rgba(54, 162, 235, 0.6)',
@@ -130,6 +142,7 @@ const AdminDashboard = () => {
     ],
   };
   function transformDataForChart(data: any) {
+    console.log(data);
 
     if (selectedData === "total") {
       chartDatas.labels = ["Total Peserta"];

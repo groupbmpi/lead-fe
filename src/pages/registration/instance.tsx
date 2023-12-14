@@ -90,19 +90,19 @@ const Home = () => {
           <h2>Profile Instansi</h2>
           <div className="mb-3">
             <label htmlFor="namaInstansi" className="form-label">Nama Instansi</label>
-            <input value={userData.namaInstansi} onChange={(e) => setUserData({ ...userData, namaInstansi: e.target.value })} type="text" className="form-control" name="namaInstansi" placeholder="Nama Instansi" required />
+            <input value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} type="text" className="form-control" name="name" placeholder="Nama Instansi" required />
           </div>
           <div className="mb-3">
-            <label htmlFor="emailInstansi" className="form-label">Email Instansi</label>
-            <input value={userData.emailInstansi} onChange={(e) => setUserData({ ...userData, emailInstansi: e.target.value })} type="email" className="form-control" name="emailInstansi" placeholder="cth: a@gmail.com" required />
+            <label htmlFor="email" className="form-label">Email Instansi</label>
+            <input value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} type="email" className="form-control" name="email" placeholder="cth: a@gmail.com" required />
           </div>
           <div className="mb-3">
             <label htmlFor="tanggalBerdiri" className="form-label">Bulan/Tahun Instansi</label>
             <input value={userData.tanggalBerdiri} onChange={(e) => setUserData({ ...userData, tanggalBerdiri: e.target.value })} type="month" className="form-control" name="tanggalBerdiri" required />
           </div>
           <div className="mb-3">
-            <label htmlFor="jenisInstansi" className="form-label">Jenis Instansi</label>
-            <select value={userData.jenisInstansi} onChange={(e) => setUserData({ ...userData, jenisInstansi: e.target.value })} className="form-select" name="jenisInstansi" required >
+            <label htmlFor="type" className="form-label">Jenis Instansi</label>
+            <select value={userData.type} onChange={(e) => setUserData({ ...userData, type: e.target.value })} className="form-select" name="type" required >
               <option selected value="Gerakan">Gerakan</option>
               <option value="Komunitas">Komunitas</option>
               <option value="Yayasan">Yayasan</option>
@@ -110,9 +110,9 @@ const Home = () => {
           </div>
           <div className="row">
             <div className="col">
-              <label htmlFor="jenisCluster" className="form-label">Jenis Cluster</label>
+              <label htmlFor="sector" className="form-label">Jenis Cluster</label>
               <select
-                value={userData.jenisCluster}
+                value={userData.sector}
                 onChange={(e) => {
                   const currentlySelectedCluster = jenisCluster.find(
                     (cluster) => cluster.text === e.target.value
@@ -120,10 +120,10 @@ const Home = () => {
                   if (currentlySelectedCluster) {
                     setSelectedClusterId(currentlySelectedCluster.id);
                   }
-                  setUserData({ ...userData, jenisCluster: e.target.value });
+                  setUserData({ ...userData, sector: e.target.value });
                 }}
                 className="form-select"
-                name="jenisCluster"
+                name="sector"
                 required
               >
                 {jenisCluster.map((cluster: Cluster) => (
@@ -134,12 +134,12 @@ const Home = () => {
               </select>
             </div>
             <div className="col">
-              <label htmlFor="fokusIsu" className="form-label">Fokus Isu</label>
+              <label htmlFor="focus" className="form-label">Fokus Isu</label>
               <select
-                value={userData.fokusIsu}
-                onChange={(e) => setUserData({ ...userData, fokusIsu: e.target.value })}
+                value={userData.focus}
+                onChange={(e) => setUserData({ ...userData, focus: e.target.value })}
                 className="form-select"
-                name="fokusIsu"
+                name="focus"
                 required
               >
                 {fokusIsu
@@ -214,35 +214,35 @@ const Home = () => {
             <input value={userData.address_postal_code} onChange={(e) => setUserData({ ...userData, address_postal_code: e.target.value })} type="text" className="form-control" name="address_postal_code" placeholder="Kode Pos" required />
           </div>
           <div className="mb-3">
-            <label htmlFor="gambaranInstansi" className="form-label">Profil/Gambaran Instansi</label>
+            <label htmlFor="description" className="form-label">Profil/Gambaran Instansi</label>
             <p>Jelaskan profil/gambaran instansi dalam 1 paragraf singkat</p>
-            <textarea rows={3} value={userData.gambaranInstansi} onChange={(e) => setUserData({ ...userData, gambaranInstansi: e.target.value })} className="form-control w-100" name="gambaranInstansi" required />
+            <textarea rows={3} value={userData.description} onChange={(e) => setUserData({ ...userData, description: e.target.value })} className="form-control w-100" name="description" required />
           </div>
           <h2>Media Sosial</h2>
           <div className="mb-3">
-            <label htmlFor="instagramInstansi" className="form-label">Link Instagram Instansi</label>
+            <label htmlFor="social_instagram" className="form-label">Link Instagram Instansi</label>
             <p>Kosongkan jika tidak ada</p>
-            <input value={userData.instagramInstansi} onChange={(e) => setUserData({ ...userData, instagramInstansi: e.target.value })} type="url" className="form-control" name="instagramInstansi" placeholder="https://instagram.com" />
+            <input value={userData.social_instagram} onChange={(e) => setUserData({ ...userData, social_instagram: e.target.value })} type="url" className="form-control" name="social_instagram" placeholder="https://instagram.com" />
           </div>
           <div className="mb-3">
-            <label htmlFor="websiteInstansi" className="form-label">Link Website Instansi</label>
+            <label htmlFor="social_website" className="form-label">Link Website Instansi</label>
             <p>Kosongkan jika tidak ada</p>
-            <input value={userData.websiteInstansi} onChange={(e) => setUserData({ ...userData, websiteInstansi: e.target.value })} type="url" className="form-control" name="websiteInstansi" placeholder="https://google.com" />
+            <input value={userData.social_website} onChange={(e) => setUserData({ ...userData, social_website: e.target.value })} type="url" className="form-control" name="social_website" placeholder="https://google.com" />
           </div>
           <div className="mb-3">
-            <label htmlFor="tiktokInstansi" className="form-label">Link Tiktok Instansi</label>
+            <label htmlFor="social_tiktok" className="form-label">Link Tiktok Instansi</label>
             <p>Kosongkan jika tidak ada</p>
-            <input value={userData.tiktokInstansi} onChange={(e) => setUserData({ ...userData, tiktokInstansi: e.target.value })} type="url" className="form-control" name="tiktokInstansi" placeholder="https://tiktok.com" />
+            <input value={userData.social_tiktok} onChange={(e) => setUserData({ ...userData, social_tiktok: e.target.value })} type="url" className="form-control" name="social_tiktok" placeholder="https://tiktok.com" />
           </div>
           <div className="mb-3">
-            <label htmlFor="youtubeInstansi" className="form-label">Link Youtube Instansi</label>
+            <label htmlFor="social_youtube" className="form-label">Link Youtube Instansi</label>
             <p>Kosongkan jika tidak ada</p>
-            <input value={userData.youtubeInstansi} onChange={(e) => setUserData({ ...userData, youtubeInstansi: e.target.value })} type="url" className="form-control" name="youtubeInstansi" placeholder="https://youtube.com" />
+            <input value={userData.social_youtube} onChange={(e) => setUserData({ ...userData, social_youtube: e.target.value })} type="url" className="form-control" name="social_youtube" placeholder="https://youtube.com" />
           </div>
           <h2>Cakupan Instansi</h2>
           <div className="mb-3">
-            <label htmlFor="cakupanInstansi" className="form-label">Cakupan Jangkauan Program yang Dijalankan Instansi</label>
-            <select value={userData.cakupanInstansi} onChange={(e) => setUserData({ ...userData, cakupanInstansi: e.target.value })} className="form-select" name="cakupanInstansi" required >
+            <label htmlFor="area" className="form-label">Cakupan Jangkauan Program yang Dijalankan Instansi</label>
+            <select value={userData.area} onChange={(e) => setUserData({ ...userData, area: e.target.value })} className="form-select" name="area" required >
               <option value="Nasional" selected>Nasional</option>
               <option value="Lebih dari Satu Provinsi">Lebih dari Satu Provinsi</option>
               <option value="Hanya Satu Provinsi">Hanya Satu Provinsi</option>
@@ -251,9 +251,9 @@ const Home = () => {
             </select>
           </div>
           <div className="mb-3">
-            <label htmlFor="jumlahPenerimaManfaat" className="form-label">Jumlah Penerima Manfaat</label>
+            <label htmlFor="total_beneficiaries" className="form-label">Jumlah Penerima Manfaat</label>
             <p>Jumlah total seluruh penerima manfaat dari kegiatan yang dilakukan melalui program oleh instansi</p>
-            <input value={userData.jumlahPenerimaManfaat} onChange={(e) => setUserData({ ...userData, jumlahPenerimaManfaat: e.target.value })} type="number" className="form-control" name="jumlahPenerimaManfaat" placeholder="Jumlah Penerima Manfaat" required />
+            <input value={userData.total_beneficiaries} onChange={(e) => setUserData({ ...userData, total_beneficiaries: e.target.value })} type="number" className="form-control" name="total_beneficiaries" placeholder="Jumlah Penerima Manfaat" required />
           </div>
           <h2>Berkas Instansi</h2>
           <div className="mb-3">
