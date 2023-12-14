@@ -20,9 +20,9 @@ const MentorProfileView = () => {
             const isAllowed = await checkAuth(['MENTOR']);
             setAllowed(isAllowed);
 
-            // if (!isAllowed) {
-            //     router.push('/mentor-login');
-            // }
+            if (!isAllowed) {
+                router.push('/mentor-login');
+            }
         };
         checkAuthentication();
     });
@@ -67,11 +67,9 @@ const MentorProfileView = () => {
         return null;
     }
     
-    console.log(userData)
     return (
         <>
             {allowed && <NavbarMentor />}
-            <NavbarMentor/>
             <div className="d-flex flex-column min-vh-100 align-items-center">
                 <div className="container mt-3 mb-3">
                     <Head>Profil</Head>

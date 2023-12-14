@@ -42,11 +42,12 @@ export default function ParticipantLogin() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
+                credentials: 'include',
             });
 
             if (response.ok) {
                 const res = await response.json();
-                cookies.set('token', res.message.token, { path: '/', secure: process.env.NODE_ENV === 'production' });
+                cookies.set('token-fe', res.message.token, { path: '/', secure: process.env.NODE_ENV === 'production' });
                 router.push('/admin/dashboard');
             } else {
                 const errorData = await response.json();
