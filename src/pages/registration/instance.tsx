@@ -52,7 +52,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchProvince();
-    }, []);
+    });
 
     const fetchCity = async () => {
         try {
@@ -67,7 +67,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchCity();
-    }, []);
+    });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -353,7 +353,7 @@ const Home = () => {
                         <div className="mb-3">
                             <label htmlFor="url_program_report" className="form-label">Unggah Laporan Akhir Tahun atau Laporan Pertanggungjawaban Pelaksanaan Program Instansi</label>
                             <p>Bila instansi Anda tidak memiliki dokumen terkait, silakan lewati bagian ini</p>
-                            <p>Pastikan tautan dapat diakses secara publik dengan format nama dokumen <b>"Laporan Akhir_Nama Instansi"</b></p>
+                            <p>Pastikan tautan dapat diakses secara publik dengan format nama dokumen <b>&quot;Laporan Akhir_Nama Instansi&quot;</b></p>
                             <input value={userData.url_program_report} onChange={(e) => setUserData({ ...userData, url_program_report: e.target.value })} type="url" className="form-control" name="url_program_report" placeholder="Link Program Report" />
                         </div>
                         <div className="mb-3">

@@ -1,5 +1,1 @@
 runtime: nodejs20
-env_variables:
-  NEXT_PUBLIC_BACKEND_URL: "http://your-backend-url.com"
-  GOOGLE_CLOUD_PROJECT: "bakrie-center-foundation-lead"
-  GCLOUD_STORAGE_BUCKET: "bakrie-center-foundation-lead.appspot.com"

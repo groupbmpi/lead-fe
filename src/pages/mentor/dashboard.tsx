@@ -118,6 +118,7 @@ const MentorDashboard = () => {
       default:
         return cellValue;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [page, setPage] = React.useState(1);

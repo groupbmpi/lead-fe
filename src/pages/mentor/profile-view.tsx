@@ -33,6 +33,7 @@ const MentorProfileView = () => {
         if (userData.image !== displayedImage) {
             setDisplayedImage(userData.image);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userData, router]);
 
     useEffect(() => {
@@ -86,6 +87,7 @@ const MentorProfileView = () => {
                         <div className="position-relative">
                         {userData.image ? (
                             <div className="rounded-circle border" style={{ width: '250px', height: '250px', overflow: 'hidden' }}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={userData.image}
                                     alt="Uploaded"
