@@ -5,6 +5,7 @@ import router from 'next/router';
 interface DecodedToken {
     id: number;
     role: string;
+    email: string;
     name: string;
     iat: number;
     exp: number;
@@ -44,6 +45,19 @@ export const checkAuth = async (requiredRoles: string[]): Promise<boolean> => {
 
     return requiredRoles.includes(decodedToken.role);
 };
+
+export const getEmail = (): string => {
+    const token = Cookies.get('token');
+    if (!token) {
+        return 'User';
+    }
+    const decodedToken = decodeToken(token);
+    if (decodedToken) {
+        return decodedToken.email;
+    } else {
+        return 'User';
+    }
+}
 
 export const getUserName = (): string => {
     const token = Cookies.get('token');

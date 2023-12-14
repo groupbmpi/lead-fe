@@ -28,10 +28,10 @@ const MentorDashboard = () => {
     const checkAuthentication = async () => {
       const isAllowed = await checkAuth(['MENTOR']);
       setAllowed(isAllowed);
-
-      if (!isAllowed) {
-        router.push('/mentor-login');
-      }
+      console.log(allowed);
+      // if (!isAllowed) {
+      //   router.push('/mentor-login');
+      // }
     };
     checkAuthentication();
   });

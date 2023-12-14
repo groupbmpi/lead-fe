@@ -1,3 +1,4 @@
+import { RegistrationProvider } from '@/contexts/RegistrationContext';
 import '@/styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { NextUIProvider } from '@nextui-org/react'
@@ -14,9 +15,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <NextUIProvider>
-        <Component {...pageProps} />
-      </NextUIProvider>
+      <RegistrationProvider>
+        <NextUIProvider>
+          <Component {...pageProps} />
+        </NextUIProvider>
+      </RegistrationProvider>
     </>
   )
 }
