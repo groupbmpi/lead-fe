@@ -82,6 +82,15 @@ const MentorProfile: React.FC = () => {
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file: File | null = e.target.files ? e.target.files[0] : null;
+
+        if (file) {
+            const maxSizeInBytes = 1 * 1024 * 1024;
+            if (file.size > maxSizeInBytes) {
+                alert('File size exceeds 1 MB limit. Please select a smaller file.');
+                e.target.files = null;
+                return;
+            }
+        }
         setSelectedImage(file);
 
         if (file) {
