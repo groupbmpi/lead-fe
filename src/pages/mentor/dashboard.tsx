@@ -28,7 +28,7 @@ const MentorDashboard = () => {
     const checkAuthentication = async () => {
       const isAllowed = await checkAuth(['MENTOR']);
       setAllowed(isAllowed);
-      console.log(allowed);
+      console.log(isAllowed);
       if (!isAllowed) {
         router.push('/mentor-login');
       }

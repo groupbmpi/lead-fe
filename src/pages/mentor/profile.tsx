@@ -3,18 +3,7 @@ import { useRouter } from 'next/router';
 import { useRegistration } from '@/contexts/RegistrationContext';
 import NavbarMentor from '@/components/Navbar/NavbarMentor';
 import Head from 'next/head';
-import { getUserName, getEmail, getMentorCategory, getId, checkAuth } from '@/utils/auth';
-
-interface UserData {
-    name: string;
-    email: string;
-    category: string;
-    birthdate: string;
-    gender: string;
-    phone_number: string;
-    current_workplace: string;
-    url_picture: string; 
-}
+import { getId, checkAuth } from '@/utils/auth';
 
 const MentorProfile: React.FC = () => {
     const router = useRouter();
@@ -23,9 +12,7 @@ const MentorProfile: React.FC = () => {
     const [formData, setFormData] = useState({ ...userData });
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [imageURL, setImageURL] = useState<string>('');
-    const email = getEmail();
-    const userName = getUserName();
-    const mentorCategory = getMentorCategory();
+
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     const [allowed, setAllowed] = useState(false);
@@ -34,9 +21,9 @@ const MentorProfile: React.FC = () => {
             const isAllowed = await checkAuth(['MENTOR']);
             setAllowed(isAllowed);
 
-            // if (!isAllowed) {
-            //     router.push('/mentor-login');
-            // }
+            if (!isAllowed) {
+                router.push('/mentor-login');
+            }
         };
         checkAuthentication();
     });
@@ -44,16 +31,15 @@ const MentorProfile: React.FC = () => {
     useEffect(() => {
         const fetchMentorData = async () => {
           try {
-            const response = await fetch(`${backendUrl}/api/v1/mentor?mentor_id=${id}`, {
+            const response = await fetch(`${backendUrl}/api/v1/mentor/${id}`, {
               credentials: 'include',
             });
                 if (response.ok) {
                     const res = await response.json();
                     const mentorData = (res.data);
-                    // Assuming the mentor data structure matches the userData structure
                     setUserData(prevUserData => ({
                         ...prevUserData,
-                        ...mentorData, // Update the state with mentor data
+                        ...mentorData,
                     }));
                 }
             } catch (error) {
@@ -63,31 +49,15 @@ const MentorProfile: React.FC = () => {
     
         fetchMentorData();
     }, [id]);
-    
-    // const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //     const file: File | null = e.target.files ? e.target.files[0] : null;
-    //     setSelectedImage(file);
-
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onload = (event) => {
-    //             setFormData((prevData) => ({
-    //                 ...prevData,
-    //                 image: event.target?.result as string,
-    //             }));
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file: File | null = e.target.files ? e.target.files[0] : null;
+        let file: File | null = e.target.files ? e.target.files[0] : null;
 
         if (file) {
             const maxSizeInBytes = 1 * 1024 * 1024;
             if (file.size > maxSizeInBytes) {
                 alert('File size exceeds 1 MB limit. Please select a smaller file.');
-                e.target.files = null;
+                file = null;
                 return;
             }
         }
@@ -106,10 +76,6 @@ const MentorProfile: React.FC = () => {
         }
     };
 
-    const handleUpload = () => {
-        console.log(selectedImage);
-    };
-
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -126,13 +92,14 @@ const MentorProfile: React.FC = () => {
 
         const userDataPayload = {
             email: userData.email,
-            category: userData.kategoriMentor,
-            birthdate: userData.tanggalLahirMentor,
-            gender: userData.genderMentor,
-            phone_number: userData.noHPMentor,
-            education_background: userData.pendidikanMentor,
-            current_workplace: userData.instansiMentor,
-            url_picture: imageURL,
+            name: userData.name,
+            category: userData.category,
+            birthdate: userData.birthdate,
+            gender: userData.gender,
+            phone_number: userData.phone_number,
+            education_background: userData.education_background,
+            position: userData.position,
+            current_workplace: userData.current_workplace,
             role: "MENTOR",
         }
 
@@ -153,76 +120,65 @@ const MentorProfile: React.FC = () => {
     console.log(userData)
     return (
         <>
+            <Head>
+                <title>LEAD - Edit Profile Mentor</title>
+            </Head>
+            {allowed && <NavbarMentor />}
             <div className="d-flex flex-column min-vh-100">
-                {allowed && <NavbarMentor />}
-                <NavbarMentor />
-                <div className="container-fluid w-sm-50 w-100 align-items-center text-center justify-content-center d-flex flex-column flex-grow-1">
-                    <form onSubmit={handleSubmit}>
-                        <Head>
-                            <title>Profile</title>
-                        </Head>
+                <div className="container-fluid w-sm-80 w-md-50 w-lg-40 w-xl-30 mx-auto align-items-center text-center justify-content-center d-flex flex-column flex-grow-1">
+                    <form onSubmit={handleSubmit} style={{width:"20%"}}>
                         <h1>Profil Mentor</h1>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <div className="col-sm-10">
-                                <input type="text" onChange={(e) => setUserData({ ...userData, email: e.target.value })} className="form-control-plaintext" name="email" value={userData.email}/> 
-                            </div>
+                            <input value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} type="text" className="form-control" name="email" disabled/> 
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
                             <label htmlFor="namaMentor" className="form-label">Nama Lengkap</label>
-                            <input value={userName} onChange={(e) => setUserData({ ...userData, namaMentor: e.target.value })} type="text" className="form-control" name="namaMentor" required/>
+                            <input value={userData.name} onChange={(e) => setUserData({ ...userData, namaMentor: e.target.value })} type="text" className="form-control" name="namaMentor" disabled/>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="tanggalLahirMentor" className="form-label">Tanggal Lahir</label>
-                            <input value={userData.tanggalLahirMentor} onChange={(e) => setUserData({ ...userData, tanggalLahirMentor: e.target.value })} type="date" className="form-control" name="tanggalLahirMentor" required/>
+                            <label htmlFor="birthdate" className="form-label">Tanggal Lahir</label>
+                            <input value={userData.birthdate} onChange={(e) => setUserData({ ...userData, birthdate: e.target.value })} type="date" className="form-control" name="birthdate" required/>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="noHPMentor" className="form-label">No Handphone</label>
-                            <input value={userData.noHPMentor} onChange={(e) => setUserData({ ...userData, noHPMentor: e.target.value })} type="tel" className="form-control" name="noHPMentor" placeholder="cth : 6281234567890" required/>
+                            <label htmlFor="phone_number" className="form-label">No Handphone</label>
+                            <input value={userData.phone_number} onChange={(e) => setUserData({ ...userData, phone_number: e.target.value })} type="tel" className="form-control" name="phone_number" placeholder="cth : 6281234567890" required/>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="genderMentor" className="form-label">Gender</label>
-                            <select value={userData.genderMentor} onChange={(e) => setUserData({ ...userData, genderMentor: e.target.value })} className="form-select" name="genderMentor" required>
-                                <option disabled selected>Pilih</option>
+                            <label htmlFor="gender" className="form-label">Gender</label>
+                            <select value={userData.gender} onChange={(e) => setUserData({ ...userData, gender: e.target.value })} className="form-select" name="gender" disabled>
                                 <option value="Pria">Pria</option>
                                 <option value="Wanita">Wanita</option>
                             </select>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="pendidikanMentor" className="form-label">Pendidikan Terakhir</label>
-                            <select value={userData.pendidikanMentor} onChange={(e) => setUserData({ ...userData, pendidikanMentor: e.target.value })} className="form-select" name="pendidikanMentor" required>
-                                <option disabled selected>Pilih</option>
-                                <option value="SD/Sederajat">SD/Sederajat</option>
-                                <option value="SMP/Sederajat">SMP/Sederajat</option>
-                                <option value="SMA/SMK/Sederajat">SMA/SMK/Sederajat</option>
-                                <option value="D3">D3</option>
-                                <option value="Tidak selesai S1">Tidak selesai S1</option>
-                                <option value="D4/S1">D4/S1</option>
+                            <label htmlFor="education_background" className="form-label">Pendidikan Terakhir</label>
+                            <select value={userData.education_background} onChange={(e) => setUserData({ ...userData, education_background: e.target.value })} className="form-select" name="education_background" required>
+                                <option value="S1">S1</option>
                                 <option value="S2">S2</option>
                                 <option value="S3">S3</option>
                             </select>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="instansiMentor" className="form-label">Instansi</label>
-                            <input value={userData.instansiMentor} onChange={(e) => setUserData({ ...userData, instansiMentor: e.target.value })} type="text" className="form-control" name="instansiMentor" required/>
+                            <label htmlFor="current_workplace" className="form-label">Instansi</label>
+                            <input value={userData.current_workplace} onChange={(e) => setUserData({ ...userData, current_workplace: e.target.value })} type="text" className="form-control" name="current_workplace" required/>
                         </div>
                         <div className="d-flex flex-column align-items-start mb-3">
-                            <label htmlFor="kategoriMentor" className="form-label">Kategori</label>
-                            <select value={mentorCategory} onChange={(e) => setUserData({ ...userData, kategoriMentor: e.target.value })} className="form-select" name="kategoriMentor" required>
-                                <option disabled selected>Pilih</option>
-                                <option value="mentorCluster">Cluster</option>
-                                <option value="mentorDesainProgram">Desain Program</option>
+                            <label htmlFor="position" className="form-label">Posisi</label>
+                            <input value={userData.position} onChange={(e) => setUserData({ ...userData, position: e.target.value })} type="text" className="form-control" name="position" disabled/>
+                        </div>
+                        <div className="d-flex flex-column align-items-start mb-3">
+                            <label htmlFor="category" className="form-label">Kategori</label>
+                            <select value={userData.category} onChange={(e) => setUserData({ ...userData, category: e.target.value })} className="form-select" name="category" required>
+                                <option value="Cluster">Cluster</option>
+                                <option value="Desain Program">Desain Program</option>
                             </select>
                         </div>
-                        {imageURL && (
-                            <div className="d-flex flex-column align-items-start mb-3">
-                                <label htmlFor="fotoMentor" className="form-label">
-                                    Preview Image
-                                </label>
-                                <img src={imageURL} alt="Uploaded" />
-                            </div>
-                        )}
-                        <button type="submit" className="btn btn-primary" onClick={handleUpload}>
+                        <div className="d-flex flex-column align-items-start mb-3">
+                            <label htmlFor="url_picture" className="form-label">Upload Picture</label>
+                            <input onChange={handleImageChange} type="file" className="form-control" name="url_picture" accept=".jpg, .jpeg, .png" />
+                        </div>
+                        <button type="submit" className="btn btn-primary">
                             Simpan
                         </button>
                     </form>
