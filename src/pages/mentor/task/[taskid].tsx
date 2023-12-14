@@ -67,6 +67,7 @@ const MentorTaskPage = () => {
         console.error(error);
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId]);
 
   const [taskSubmissions, setTaskSubmissions] = useState<TaskSubmission[]>([]);
@@ -89,6 +90,7 @@ const MentorTaskPage = () => {
         console.error(error);
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId]);
 
   const [participants, setParticipants] = useState<Participant[]>([]);
@@ -109,6 +111,7 @@ const MentorTaskPage = () => {
         console.error(error);
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId]);
 
   const isSubmitted = (participantId: number) => {

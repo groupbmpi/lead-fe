@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { Dropdown, Spinner } from "react-bootstrap";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import Cookies from 'js-cookie';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -47,7 +48,6 @@ const AdminDashboard = () => {
         credentials: 'include',
       });
       const res = await response.json();
-      console.log(res.data);
       return res.data;
     }
   }
@@ -65,6 +65,7 @@ const AdminDashboard = () => {
         }
       })
       .then(() => setLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, selectedData]);
 
   const chartDatas = {

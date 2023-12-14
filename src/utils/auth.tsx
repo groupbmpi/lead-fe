@@ -27,7 +27,7 @@ export const decodeToken = (token: string | null): DecodedToken | null => {
 };
 
 export const checkAuth = async (requiredRoles: string[]): Promise<boolean> => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('token-fe');
     if (!token) {
         return false;
     }
@@ -39,7 +39,7 @@ export const checkAuth = async (requiredRoles: string[]): Promise<boolean> => {
 
     const currentTimestamp = Math.floor(Date.now() / 1000);
     if (decodedToken.exp < currentTimestamp) {
-        Cookies.remove('token');
+        Cookies.remove('token-fe');
         return false;
     }
 
@@ -47,7 +47,7 @@ export const checkAuth = async (requiredRoles: string[]): Promise<boolean> => {
 };
 
 export const getEmail = (): string => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('token-fe');
     if (!token) {
         return 'User';
     }
@@ -60,7 +60,7 @@ export const getEmail = (): string => {
 }
 
 export const getUserName = (): string => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('token-fe');
     if (!token) {
         return 'User';
     }
@@ -73,7 +73,7 @@ export const getUserName = (): string => {
 }
 
 export const getRole = (): string => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('token-fe');
     if (!token) {
         return 'User';
     }
@@ -81,13 +81,13 @@ export const getRole = (): string => {
     if (decodedToken) {
         return decodedToken.role;
     } else {
-        Cookies.remove('token');
+        Cookies.remove('token-fe');
         return 'User';
     }
 }
 
 export const getId = (): number => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('token-fe');
     if (!token) {
         return 0;
     }
@@ -95,13 +95,13 @@ export const getId = (): number => {
     if (decodedToken) {
         return decodedToken.id;
     } else {
-        Cookies.remove('token');
+        Cookies.remove('token-fe');
         return 0;
     }
 }
 
 export const getMentorCategory = (): string => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('token-fe');
     if (!token) {
         return 'User';
     }
@@ -109,7 +109,7 @@ export const getMentorCategory = (): string => {
     if (decodedToken && decodedToken.category) {
         return decodedToken.category;
     } else {
-        Cookies.remove('token');
+        Cookies.remove('token-fe');
         return 'User';
     }
 }
@@ -125,7 +125,7 @@ export const handleLogout = async () => {
         });
 
         if (response.ok) {
-            Cookies.remove('token');
+            Cookies.remove('token-fe');
             router.push('/');
         } else {
             console.error('Error logging out:', await response.text());
