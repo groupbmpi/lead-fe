@@ -109,6 +109,7 @@ const Instance = () => {
         if (!id) return;
         fetchInstance();
         getParticipant();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
 

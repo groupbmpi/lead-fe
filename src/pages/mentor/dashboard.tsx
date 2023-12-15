@@ -29,9 +29,9 @@ const MentorDashboard = () => {
       const isAllowed = await checkAuth(['MENTOR']);
       setAllowed(isAllowed);
       console.log(allowed);
-      // if (!isAllowed) {
-      //   router.push('/mentor-login');
-      // }
+      if (!isAllowed) {
+        router.push('/mentor-login');
+      }
     };
     checkAuthentication();
   });
@@ -118,6 +118,7 @@ const MentorDashboard = () => {
       default:
         return cellValue;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [page, setPage] = React.useState(1);

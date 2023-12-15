@@ -25,6 +25,7 @@ const InformationBanner = () => {
   }
   
   if (bannerData.url_picture) {
+    // eslint-disable-next-line @next/next/no-img-element
     return <img className="min-vw-100" src={bannerData.url_picture} alt="Information Banner" />;
   }
 };
