@@ -1,8 +1,13 @@
+import { redirectLoggedInUser } from '@/utils/auth';
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect } from 'react';
 
 export default function Home() {
+  useEffect(() => {
+    redirectLoggedInUser();
+  });
   return (
     <>
       <Head>
