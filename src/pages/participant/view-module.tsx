@@ -11,12 +11,12 @@ const ViewModule = () => {
     const [allowed, setAllowed] = useState(false);
     useEffect(() => {
         const checkAuthentication = async () => {
-            const isAllowed = await checkAuth(['MENTOR']);
+            const isAllowed = await checkAuth(['PARTICIPANT']);
             setAllowed(isAllowed);
 
-            // if (!isAllowed) {
-            //     router.push('/mentor-login');
-            // }
+            if (!isAllowed) {
+                router.push('/mentor-login');
+            }
         };
         checkAuthentication();
     });
@@ -26,8 +26,7 @@ const ViewModule = () => {
         <Head>
             <title>LEAD - View Module</title>
         </Head>
-        {/* {allowed && <NavbarParticipant />} */}
-        <NavbarParticipant />
+        {allowed && <NavbarParticipant />}
         <div className="vh-100 d-flex flex-column overflow-hidden">
             <div className="flex-grow-1">
                 <iframe
