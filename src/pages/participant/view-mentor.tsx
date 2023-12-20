@@ -74,6 +74,7 @@ const MentorListPage = () => {
                 <title>LEAD - Lihat Daftar Mentor</title>
             </Head>
             {allowed && <NavbarParticipant />}
+            <NavbarParticipant/>
             <div className="mentor-list-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
                 <div className="mentor-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <h1 style={{marginBottom: '20px' }}>Mentor List</h1>
