@@ -76,7 +76,6 @@ const ParticipantListPage = () => {
         }));
 
         setParticipants(participantsWithInstanceName);
-        console.log(participantsWithInstanceName)
         if (participantsWithInstanceName) {
           setIsLoading(false);
           return {
@@ -161,7 +160,6 @@ const ParticipantListPage = () => {
   }, [page, list.items]);
 
   const handleDelete = async (participantId: string) => {
-    console.log("Delete button clicked");
     const participantToDelete = participants.find(p => p.participant_id === participantId);
     setModalContent(participantToDelete || null);
     setShowModal(true);
@@ -175,7 +173,7 @@ const ParticipantListPage = () => {
       });
 
       if (response.ok) {
-        console.log(`Participant with ID ${participantId} deleted successfully`);
+        // console.log(`Participant with ID ${participantId} deleted successfully`);
       } else {
         console.error('Failed to delete participant');
       }
@@ -196,7 +194,7 @@ const ParticipantListPage = () => {
       });
 
       if (response.ok) {
-        console.log(`Participant with ID ${participantToDelete} deleted successfully`);
+        // console.log(`Participant with ID ${participantToDelete} deleted successfully`);
         const updatedParticipants = participants.filter(p => p.participant_id !== participantToDelete);
         setParticipants(updatedParticipants);
       } else {
