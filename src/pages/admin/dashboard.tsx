@@ -142,8 +142,6 @@ const AdminDashboard = () => {
     ],
   };
   function transformDataForChart(data: any) {
-    console.log(data);
-
     if (selectedData === "total") {
       chartDatas.labels = ["Total Peserta"];
       chartDatas.datasets[0].data = [data.total];

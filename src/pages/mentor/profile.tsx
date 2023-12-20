@@ -31,9 +31,9 @@ const MentorProfile: React.FC = () => {
             const isAllowed = await checkAuth(['MENTOR']);
             setAllowed(isAllowed);
 
-            // if (!isAllowed) {
-            //     router.push('/mentor-login');
-            // }
+            if (!isAllowed) {
+                router.push('/mentor-login');
+            }
         };
         checkAuthentication();
     });
@@ -100,7 +100,6 @@ const MentorProfile: React.FC = () => {
         <>
             <div className="d-flex flex-column min-vh-100">
                 {allowed && <NavbarMentor />}
-                <NavbarMentor />
                 <div className="container-fluid w-sm-50 w-100 align-items-center text-center justify-content-center d-flex flex-column flex-grow-1">
                     <form onSubmit={handleSubmit}>
                         <Head>
