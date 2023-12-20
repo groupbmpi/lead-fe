@@ -58,7 +58,7 @@ const ParticipantListPage = () => {
       if (response.ok) {
         const res = await response.json();
         const participantsData = res.data?.participants || [];
-        
+
         const participantsWithInstanceName = await Promise.all(participantsData.map(async (participant: { instance_id: any; }) => {
           const instanceResponse = await fetch(`${backendUrl}/api/v1/instance/${participant.instance_id}`, {
             credentials: 'include',
@@ -223,37 +223,44 @@ const ParticipantListPage = () => {
         <title>LEAD - Lihat Daftar Peserta</title>
       </Head>
       {allowed && <NavbarAdmin />}
-      <Table sortDescriptor={list.sortDescriptor}
-        onSortChange={list.sort} isStriped aria-label="participant list table" bottomContent={
-          <div className="flex w-full justify-center">
-            <Pagination
-              isCompact
-              showControls
-              showShadow
-              color="secondary"
-              page={page}
-              total={pages}
-              onChange={(page) => setPage(page)}
-              className={styles.removePadding}
-            />
+      <div className="d-flex flex-column container-fluid p-4">
+        {isLoading &&
+          <div className="d-flex align-items-center justify-content-center">
+            <Spinner />
           </div>
-        }>
-        <TableHeader columns={columns}>
-          {(column) => <TableColumn key={column.key} allowsSorting allowsResizing>{column.label}</TableColumn>}
-        </TableHeader>
-        {list.items.length > 0 ?
-          <TableBody items={listOfItems}
-            isLoading={isLoading}
-            loadingContent={<Spinner label="Loading..." />}>
-            {(item: Participant) => (
-              <TableRow key={item.participant_id}>
-                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-              </TableRow>
-            )}
-          </TableBody> :
-          <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
         }
-      </Table>
+        <Table sortDescriptor={list.sortDescriptor}
+          onSortChange={list.sort} isStriped aria-label="participant list table" bottomContent={
+            <div className="flex w-full justify-center">
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                color="secondary"
+                page={page}
+                total={pages}
+                onChange={(page) => setPage(page)}
+                className={styles.removePadding}
+              />
+            </div>
+          }>
+          <TableHeader columns={columns}>
+            {(column) => <TableColumn key={column.key} allowsSorting allowsResizing>{column.label}</TableColumn>}
+          </TableHeader>
+          {list.items.length > 0 ?
+            <TableBody items={listOfItems}
+              isLoading={isLoading}
+              loadingContent={<Spinner label="Loading..." />}>
+              {(item: Participant) => (
+                <TableRow key={item.participant_id}>
+                  {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                </TableRow>
+              )}
+            </TableBody> :
+            <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
+          }
+        </Table>
+      </div>
       <Modal show={showModal} onHide={closeModal} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Apakah anda yakin ingin menghapus peserta?</Modal.Title>
