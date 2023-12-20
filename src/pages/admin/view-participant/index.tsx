@@ -58,7 +58,7 @@ const ParticipantListPage = () => {
       if (response.ok) {
         const res = await response.json();
         const participantsData = res.data?.participants || [];
-
+        
         const participantsWithInstanceName = await Promise.all(participantsData.map(async (participant: { instance_id: any; }) => {
           const instanceResponse = await fetch(`${backendUrl}/api/v1/instance/${participant.instance_id}`, {
             credentials: 'include',
@@ -67,7 +67,6 @@ const ParticipantListPage = () => {
 
           if (instanceResponse.ok) {
             const instanceRes = await instanceResponse.json();
-            console.log(instanceRes);
             const instanceName = instanceRes.data?.name || 'Unknown';
             return { ...participant, instanceName };
           } else {
@@ -113,7 +112,7 @@ const ParticipantListPage = () => {
 
   const columns = [
     {
-      key: "instancename",
+      key: "instanceName",
       label: "NAMA INSTANSI",
     },
     {
@@ -226,31 +225,6 @@ const ParticipantListPage = () => {
         <title>LEAD - Lihat Daftar Peserta</title>
       </Head>
       {allowed && <NavbarAdmin />}
-      {/* <div className="participant-list-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>
-        <div className="participant-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h1 style={{ marginBottom: '20px' }}>Daftar Peserta</h1>
-          <div className="participant-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', alignItems: 'stretch' }}>
-            {participants.map((participant) => (
-              <Link key={participant.participant_id} href={`/admin/view-participant/${participant.participant_id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div key={participant.participant_id} style={{ width: '600px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff', transition: 'box-shadow 0.3s ease', display: 'flex', flexDirection: 'column', textDecoration: 'none', color: 'inherit', }} className="mentor-card">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <h3>{participant.name}</h3>
-                    <div style={{ display: 'flex', gap: '5px' }}>
-                      <button className="btn btn-danger" onClick={(e) => {
-                        e.preventDefault();
-                        handleDelete(participant.participant_id);
-                      }}>Delete</button>
-                    </div>
-                  </div>
-                  <LabelValuePair label="Id" value={participant.participant_id} />
-                  <LabelValuePair label="Email" value={participant.email} />
-                  <LabelValuePair label="Instansi" value={participant.instanceName} />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div> */}
       <Table sortDescriptor={list.sortDescriptor}
         onSortChange={list.sort} isStriped aria-label="participant list table" bottomContent={
           <div className="flex w-full justify-center">
